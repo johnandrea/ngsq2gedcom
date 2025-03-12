@@ -7,6 +7,14 @@ For this parser the PDF should be converted to CSV via the OCR tools of Amazon A
 
 At this early stage, read the code for a list of assumptions and conversion notes.
 
+## Notes on variants:
+- the document in hand has "b. DATE" after a person's name
+- the document from RMv9 has "was born DATE" after a person's name
+- the document in hand has a period after the roman numerals for birth order
+- the document from RMv9 does not have a period after the roman numerals
+- the document in hand has a line of "Children:" leading the list of children
+- the document from RMv9 uses "...had the following children:"
+
 ## Notes on the report format:
 - https://web.archive.org/web/20210810080315/http://www.saintclair.org/numbers/nummr.html
 - http://higdonfamily.org/research-tips-for-advanced/numbering-systems-for-genea/descending-numbering-system/ngsq-system-1903.html
