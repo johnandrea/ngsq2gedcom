@@ -5,9 +5,13 @@ The intention is to capture the family structure of the original data.
 
 Determination of exact names, partners, dates, etc. is very difficult from the free format of the original PDF. The detail content will be inserted into a NOTE field for each individual.
 
-For this parser, the PDF should be converted to CSV via the OCR tools of Amazon AWS Textract in the Layout configuration: https://aws.amazon.com/textract/
+For this parser, the PDF should be converted to CSV via the OCR tools of Amazon AWS Textract in the Layout configuration: https://aws.amazon.com/textract/ Other PDF text extraction tools I've tried have been less accurate in saving data.
 
 At this early stage, read the code for a list of assumptions and conversion notes.
+
+## Data Assumptions
+- parent name rows begin with "number period space"
+- child name rows begin with "optional-plus number spave roman-numeral-birth-order optional-period space"
 
 ## Notes on variants:
 - the document in hand has "b. DATE" after a person's name
