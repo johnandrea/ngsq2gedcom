@@ -19,6 +19,6 @@ At this early stage, read the code for a list of assumptions and conversion note
 - the document in hand has "She|He married OTHER"
 - the sample from RMv9 has "NAME and OTHER were married"
 
-## Notes on the report format:
+## About the report format:
 - https://web.archive.org/web/20210810080315/http://www.saintclair.org/numbers/nummr.html
 - http://higdonfamily.org/research-tips-for-advanced/numbering-systems-for-genea/descending-numbering-system/ngsq-system-1903.html
