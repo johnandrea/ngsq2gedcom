@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.0.1
+v0.0.2
 """
 
 
@@ -19,6 +19,7 @@ import csv
 # Assumptions and notes:
 #- output to stdout
 #- parameters: name of directory containing input file "layout.csv"
+#- no consideration of special (non-ansi) characters
 #- children lines all include roman numeral burth orders
 #- sometimes the ocr messes up the location of the start children line
 #- surnames are the last word of a name portion (probebly wrong to assume)
@@ -134,7 +135,7 @@ def gedcom_indi( p ):
     print( '1 NAME', people[p]['name'] )
     if people[p]['notes']:
        size = len( people[p]['notes'] )
-       prefix = '2 NOTE'
+       prefix = '1 NOTE'
        if size <= note_limit:
           print( prefix, people[p]['notes'] )
        else:
@@ -143,7 +144,7 @@ def gedcom_indi( p ):
           for i in range( size ):
               if n == note_limit:
                  print( prefix, output )
-                 prefix = '3 CONT'
+                 prefix = '2 CONT'
                  output = ''
                  n = 0
 
