@@ -1,11 +1,24 @@
+"""
+Convert am NGSQ report genealogy NGSQ report file into a GEDCOM file
+provided the PDF report has been OCRed into a CSV using Amazon AWS Textract in Layout configuration.
+
+This code is released under the MIT License: https://opensource.org/licenses/MIT
+Copyright (c) 2025 John A. Andrea
+
+No support provided.
+
+v0.0.1
+"""
+
+
 import sys
+import os
 import re
 import csv
 
-# Convert an NGSQ report, ocr'd from PDF to a GEDCOM file
-
 # Assumptions and notes:
-#- input is a CSV file produced by ising Amazon AWS Textract in Layout configuration
+#- output to stdout
+#- parameters: name of directory containing input file "layout.csv"
 #- children lines all include roman numeral burth orders
 #- sometimes the ocr messes up the location of the start children line
 #- surnames are the last word of a name portion (probebly wrong to assume)
@@ -190,7 +203,7 @@ def process_people():
            people[p]['name'] = name[:name_limit-1]
 
 
-with open( sys.argv[1] + '/layout.csv', encoding="utf-8" ) as inf:
+with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
      csvreader = csv.reader( inf )
 
      # first line
@@ -219,7 +232,7 @@ with open( sys.argv[1] + '/layout.csv', encoding="utf-8" ) as inf:
             continue
 
          if content == 'Children:':
-            print( mark, 'in chidren', file=sys.stderr )
+            #print( mark, 'in chidren', file=sys.stderr )
             in_children = True
             continue
 
@@ -228,21 +241,21 @@ with open( sys.argv[1] + '/layout.csv', encoding="utf-8" ) as inf:
             in_children = False
             person_n = m.group(1)
             remain1 = m.group(2)
-            print( mark, 'person number/', person_n, file=sys.stderr )
+            #print( mark, 'person number/', person_n, file=sys.stderr )
             people[person_n] = start_person( person_n )
             m = ross_numbered.match( remain1 )
             if m:
                name = m.group(1)
                ross_id = m.group(2)
                remain2 = m.group(3)
-               print( mark, 'name/', name, file=sys.stderr )
-               print( mark, 'rossid/', ross_id, file=sys.stderr )
-               print( mark, 'remainder/', remain2, file=sys.stderr )
+               #print( mark, 'name/', name, file=sys.stderr )
+               #print( mark, 'rossid/', ross_id, file=sys.stderr )
+               #print( mark, 'remainder/', remain2, file=sys.stderr )
                people[person_n]['name'] = name
                people[person_n]['rossid'] = ross_id
                people[person_n]['lines'].append( remain2 )
             else:
-               print( mark, 'unnamed/', remain1, file=sys.stderr )
+               #print( mark, 'unnamed/', remain1, file=sys.stderr )
                people[person_n]['name'] = remain1
                people[person_n]['lines'].append( remain1 )
             # check for ocr mistake
@@ -260,7 +273,7 @@ with open( sys.argv[1] + '/layout.csv', encoding="utf-8" ) as inf:
                person_n = m.group(2)
                remain1 = m.group(3)
                people[person_n] = start_person( person_n )
-               print( mark, 'child number/', person_n, file=sys.stderr )
+               #print( mark, 'child number/', person_n, file=sys.stderr )
                m = ross_numbered.match( remain1 )
                if m:
                   name = m.group(1)
@@ -269,9 +282,9 @@ with open( sys.argv[1] + '/layout.csv', encoding="utf-8" ) as inf:
                   people[person_n]['name'] = name
                   people[person_n]['rossid'] = ross_id
                   people[person_n]['lines'].append( remain2 )
-                  print( mark, 'child name/', name, file=sys.stderr )
+                  #print( mark, 'child name/', name, file=sys.stderr )
                else:
-                  print( mark, 'unnamed child/', remain1, file=sys.stderr )
+                  #print( mark, 'unnamed child/', remain1, file=sys.stderr )
                   people[person_n]['name'] = remain1
                   people[person_n]['lines'].append( remain1 )
                current_person = person_n
@@ -283,15 +296,15 @@ with open( sys.argv[1] + '/layout.csv', encoding="utf-8" ) as inf:
 
          if first_person is not None:
             people[current_person]['lines'].append( content )
-         print( unmark, content, file=sys.stderr )
+         #print( unmark, content, file=sys.stderr )
 
 if first_person is None:
    print( 'problem: no one detected', file=sys.stderr )
 else:
    process_people()
-   print( '', file=sys.stderr )
-   print( 'People', file=sys.stderr )
-   show_people( '', first_person )
+   #print( '', file=sys.stderr )
+   #print( 'People', file=sys.stderr )
+   #show_people( '', first_person )
 
    gedcom_header()
    gedcom_indi( first_person )
