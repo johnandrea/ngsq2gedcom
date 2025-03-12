@@ -9,11 +9,13 @@ At this early stage, read the code for a list of assumptions and conversion note
 
 ## Notes on variants:
 - the document in hand has "b. DATE" after a person's name
-- the document from RMv9 has "was born DATE" after a person's name
+- the sample from RMv9 has "was born DATE" after a person's name
 - the document in hand has a period after the roman numerals for birth order
-- the document from RMv9 does not have a period after the roman numerals
+- the sample from RMv9 does not have a period after the roman numerals
 - the document in hand has a line of "Children:" leading the list of children
-- the document from RMv9 uses "...had the following children:"
+- the sample from RMv9 uses "...had the following children:"
+- the document in hand has "She|He married OTHER"
+- the sample from RMv9 has "NAME and OTHER were married"
 
 ## Notes on the report format:
 - https://web.archive.org/web/20210810080315/http://www.saintclair.org/numbers/nummr.html
