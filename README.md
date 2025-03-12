@@ -6,3 +6,7 @@ The intention is to capture the family structure of the original data. Determina
 For this parser the PDF should be converted to CSV via the OCR tools of Amazon AWS Textract: https://aws.amazon.com/textract/
 
 At this early stage, read the code for a list of assumptions and conversion notes.
+
+Notes on the report format:
+https://web.archive.org/web/20210810080315/http://www.saintclair.org/numbers/nummr.html
+http://higdonfamily.org/research-tips-for-advanced/numbering-systems-for-genea/descending-numbering-system/ngsq-system-1903.html
