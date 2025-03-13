@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.2.0
+v0.2.1
 """
 
 import sys
@@ -53,16 +53,20 @@ ross_numbered = re.compile( '([^#]+) #(\\d+)[,|\\.]?(.*)' )
 # more attempt to extract the name
 # in order of checking
 # 2/  given middle surname.
-# 3/  given mid. surname.
+# 3/  given initial. surname.
 # 4/  given middle surname, details
 # 5/  given middle surname. details
 # 6/  given middle surname b. date
-# 6/  given middle surname b. Abt date
+# 7/  given middle surname b. Abt date
+# 8/  given initial. surname b. date
+# 9/  given initial. surname b. Abt date
 name_matchers = []
 name_matchers.append( re.compile( '^([\\w\\(\\) ]+), (.*)' ) ) #4
 name_matchers.append( re.compile( '^([\\w\\(\\) ]+) (b. \\d.*)' ) ) #6
 name_matchers.append( re.compile( '^([\\w\\(\\) ]+) (b. Abt.*)' ) ) #7
-name_matchers.append( re.compile( '^([\\w\\(\\) ]+)\\. (.*)' ) ) #4
+name_matchers.append( re.compile( '^([\\w\\(\\) ]+)\\. (.*)' ) ) #5
+name_matchers.append( re.compile( '^(\\w+ [A-Z]\\. \\w+) (b. \\d.*)' ) ) #8
+name_matchers.append( re.compile( '^(\\w+ [A-Z]\\. \\w+) (b. Abt.*)' ) ) #9
 
 # short; as in no detail portion
 name_matchers_short = []
