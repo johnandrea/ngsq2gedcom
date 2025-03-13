@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.0.2
+v0.0.3
 """
 
 
@@ -73,6 +73,35 @@ note_limit = 246
 # but both the givn and surn are each allowed to have that same length\
 # subtract len( '1 name //' ) = 9 , plus 2
 name_limit = 110
+
+# common names to help determine sex
+females = ['Adele', 'Alice', 'Amelia', 'Andrea', 'Ann', 'Annie', 'Antoinette',
+           'Aurora', 'Barbara', 'Bernice', 'Carol', 'Catherine', 'Cecilia',
+           'Cynthia', 'Daphne', 'Denise', 'Donna', 'Elizabeth', 'Emily', 'Esme',
+           'Esther', 'Eugenia', 'Eva', 'Evelyn', 'Farrah', 'Gail', 'Geneva',
+           'Genevieve', 'Genie', 'Hazel', 'Helen', 'Hindth', 'Irene', 'Isabelle',
+           'Jamalie', 'Jane', 'Janet', 'Jean', 'Joan', 'Josephine', 'Joyce', 'Julia',
+           'Julie', 'Juliet', 'Juliette', 'Karen', 'Katherine', 'Kyla', 'Lillian',
+           'Linda', 'Loretta', 'Lorraine', 'Louise', 'Lulu', 'Lynn', 'Madeline',
+           'Mamie', 'Margaret', 'Marguerite', 'Maria', 'Mariam', 'Marie', 'Marina',
+           'Marion', 'Martha', 'Mary', 'Matilda', 'Mercedes', 'Meriana', 'Minera',
+           'Morena', 'Nancy', 'Odette', 'Patricia', 'Paula', 'Paulette', 'Rebecca',
+           'Regina', 'Rita', 'Roberta', 'Rochelle', 'Rosa', 'Rose', 'Sadie', 'Sandra',
+           'Sarah', 'Sarrauff', 'Serena', 'Sevilla', 'Shaheedy', 'Shela', 'Shirley',
+           'Sister', 'Suraya', 'Susan', 'Suzette', 'Sylvia', 'Theresa', 'Thresa',
+           'Veronica', 'Victoria', 'Virginia', 'Yamile', 'Yvonne']
+males = ['Abdullah', 'Abraham', 'Adrian', 'Albert', 'Allan', 'Alsyus', 'Anthony',
+         'Antonio', 'Badaoui', 'Boutrous', 'Brent', 'Brian', 'Cameron', 'Charles',
+         'Chester', 'Christopher', 'Daniel', 'Dave', 'David', 'Derek', 'Edward',
+         'Elias', 'Eugene', 'Felix', 'Francis', 'Frank', 'Fred', 'Frederick',
+         'Gabriel', 'Garth', 'Gary', 'George', 'Gerald', 'Gordon', 'Haid', 'Harold',
+         'James', 'Jerges', 'Jerry', 'John', 'Jorge', 'Joseph', 'Kevin', 'Khalil',
+         'Louis', 'Male', 'Marshall', 'Maurice', 'Michael', 'Nahman', 'Paul', 'Peter',
+         'Philip', 'Pierre', 'Rafoul', 'Randolph', 'Raymond', 'Rev.', 'Richard',
+         'Rob', 'Robert', 'Roger', 'Ronald', 'Ronnie', 'Roy', 'Salim', 'Salomon',
+         'Simon', 'Stephan', 'Tannous', 'Thomas', 'Tony', 'Vincent', 'Wadih',
+         'William', 'Youssef']
+
 
 
 def gedcom_header():
@@ -189,14 +218,24 @@ def process_people():
         for line in people[p]['lines']:
             whole_note += ' ' + line
         people[p]['notes'] = whole_note.replace( '  ', ' ' ).replace( '  ', ' ' ).strip()
+
         # might not have any children, but if married then in a family
         in_fams = len(people[p]['children']) > 0
-        if ' He married' in people[p]['notes']:
-           people[p]['sex'] = 'M'
+        sex = ''
+        if 'He married' in people[p]['notes']:
+           sex = 'M'
            in_fams = True
-        if ' She married' in people[p]['notes']:
-           people[p]['sex'] = 'F'
+        if 'She married' in people[p]['notes']:
+           sex = 'F'
            in_fams = True
+        if not sex:
+           first_name = people[p]['name'].split()[0]
+           if first_name in males:
+              sex = 'M'
+           elif first_name in females:
+              sex = 'F'
+        people[p]['sex'] = sex
+
         people[p]['in-fams'] = in_fams
         # limit name size
         name = people[p]['name']
