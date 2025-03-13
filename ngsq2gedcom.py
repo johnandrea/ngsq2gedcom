@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.1
+v0.1.1
 """
 
 import sys
@@ -26,6 +26,7 @@ import csv
 #- sex is determined my the phrase in the notes and common first names
 #- a person without a sex will be listed as HUSB in a family record
 #- INDI XREF values are taken from person numbers in the input
+#- no consideration for multiple marriages or children thereof
 
 # This particular version parses a document whic has "#numbers" following
 # the name (most of them) which becomes a REFN tag.
@@ -47,6 +48,16 @@ child_marker = re.compile( '^(\\+)? ?(\\d+) [i|I|v|V|x|X]+\\. ?(.*)' )
 # line with name might contain the Ross MacKay id number
 # name-chars # digits comma|dot chars
 ross_numbered = re.compile( '([^#]+) #(\\d+)[,|\\.]?(.*)' )
+
+# more attempt to extract the name
+name_matchers = []
+name_matchers_short = []
+name_comma = re.compile( '^([\\w\\(\\) ]+), (.*)' )
+name_dot = re.compile( '^([\\w\\(\\) ]+)\\. (.*)' )
+name_dot_end = re.compile( '^([\\w\\(\\) ]+)\\.$' )
+name_matchers.append( name_comma )
+name_matchers.append( name_dot )
+name_matchers_short.append( name_dot_end )
 
 # inside a children block
 in_children = False
@@ -134,6 +145,7 @@ def unquote_row( row_data ):
 
 
 def start_person( p, remainder_of_line ):
+    # inputs should have been 'strip()ed'
     results = dict()
     results['name'] = ''
     results['sex'] = ''
@@ -145,18 +157,40 @@ def start_person( p, remainder_of_line ):
     results['famc'] = None
 
     # try to extract the name portion
+    # from strings like
+    # 1 = given middle surname #12345, more details
+    # 2 = given middle surname, more details
+    # 3 = given middle surname. more details
+    # 4 = ?
+    name = ''
+    ross_id = ''
+    after_name = ''
     m = ross_numbered.match( remainder_of_line )
     if m:
+       # (1)
        name = m.group(1)
        ross_id = m.group(2)
        after_name = m.group(3)
-
-       results['name'] = name
-       results['rossid'] = ross_id
-       results['lines'].append( after_name )
     else:
-       results['name'] = remainder_of_line
-       results['lines'].append( remainder_of_line )
+       for name_match in name_matchers:
+           m = name_match.match( remainder_of_line )
+           if m:
+              name = m.group(1)
+              after_name = m.group(2)
+              break
+       if not name:
+          for name_match in name_matchers_short:
+              m = name_match.match( remainder_of_line )
+              if m:
+                 name = m.group(1)
+                 break
+       if not name:
+          name = remainder_of_line
+          after_name = remainder_of_line
+
+    results['name'] = name.strip()
+    results['rossid'] = ross_id.strip()
+    results['lines'].append( after_name.strip() )
 
     return results
 
@@ -305,10 +339,10 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
 
          m = person_marker.match( content )
          if m:
+            # 123. name-part detail-part
             in_children = False
-            person_n = m.group(1)
-            remainder = m.group(2)
-            #print( mark, 'person number/', person_n, file=sys.stderr )
+            person_n = m.group(1).strip()
+            remainder = m.group(2).strip()
             people[person_n] = start_person( person_n, remainder )
             # check for ocr mistake
             if remainder.endswith( ' Children:' ):
@@ -322,8 +356,11 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
          if in_children:
             m = child_marker.match( content )
             if m:
-               person_n = m.group(2)
-               remainder = m.group(3)
+               # +123 vii. name-part detail-part
+               # or
+               # 123 vii. name-part detail-part
+               person_n = m.group(2).strip()
+               remainder = m.group(3).strip()
                people[person_n] = start_person( person_n, remainder )
                current_person = person_n
                # parent family includes this child
