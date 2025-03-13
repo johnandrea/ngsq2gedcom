@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.0.3
+v0.0.4
 """
 
 
@@ -131,7 +131,7 @@ def unquote_row( row_data ):
     return output
 
 
-def start_person( p ):
+def start_person( p, remainder_of_line ):
     results = dict()
     results['name'] = ''
     results['sex'] = ''
@@ -141,6 +141,21 @@ def start_person( p ):
     # this person might not have any children, but setup a family number
     results['fams'] = p
     results['famc'] = None
+
+    # try to extract the name portion
+    m = ross_numbered.match( remainder_of_line )
+    if m:
+       name = m.group(1)
+       ross_id = m.group(2)
+       after_name = m.group(3)
+
+       results['name'] = name
+       results['rossid'] = ross_id
+       results['lines'].append( after_name )
+    else:
+       results['name'] = remainder_of_line
+       results['lines'].append( remainder_of_line )
+
     return results
 
 
@@ -280,26 +295,11 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
          if m:
             in_children = False
             person_n = m.group(1)
-            remain1 = m.group(2)
+            remainder = m.group(2)
             #print( mark, 'person number/', person_n, file=sys.stderr )
-            people[person_n] = start_person( person_n )
-            m = ross_numbered.match( remain1 )
-            if m:
-               name = m.group(1)
-               ross_id = m.group(2)
-               remain2 = m.group(3)
-               #print( mark, 'name/', name, file=sys.stderr )
-               #print( mark, 'rossid/', ross_id, file=sys.stderr )
-               #print( mark, 'remainder/', remain2, file=sys.stderr )
-               people[person_n]['name'] = name
-               people[person_n]['rossid'] = ross_id
-               people[person_n]['lines'].append( remain2 )
-            else:
-               #print( mark, 'unnamed/', remain1, file=sys.stderr )
-               people[person_n]['name'] = remain1
-               people[person_n]['lines'].append( remain1 )
+            people[person_n] = start_person( person_n, remainder )
             # check for ocr mistake
-            if remain1.endswith( ' Children:' ):
+            if remainder.endswith( ' Children:' ):
                in_children = True
             if first_person is None:
                first_person = person_n
@@ -311,22 +311,8 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
             m = child_marker.match( content )
             if m:
                person_n = m.group(2)
-               remain1 = m.group(3)
-               people[person_n] = start_person( person_n )
-               #print( mark, 'child number/', person_n, file=sys.stderr )
-               m = ross_numbered.match( remain1 )
-               if m:
-                  name = m.group(1)
-                  ross_id = m.group(2)
-                  remain2 = m.group(3)
-                  people[person_n]['name'] = name
-                  people[person_n]['rossid'] = ross_id
-                  people[person_n]['lines'].append( remain2 )
-                  #print( mark, 'child name/', name, file=sys.stderr )
-               else:
-                  #print( mark, 'unnamed child/', remain1, file=sys.stderr )
-                  people[person_n]['name'] = remain1
-                  people[person_n]['lines'].append( remain1 )
+               remainder = m.group(3)
+               people[person_n] = start_person( person_n, remainder )
                current_person = person_n
                # parent family includes this child
                people[current_parent]['children'].append( person_n )
