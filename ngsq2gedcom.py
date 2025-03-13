@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.2.1
+v0.2.2
 """
 
 import sys
@@ -158,6 +158,32 @@ def unquote_row( row_data ):
     return output
 
 
+def extract_name( given ):
+    name = ''
+    after = ''
+    for name_match in name_matchers:
+        m = name_match.match( given )
+        if m:
+           name = m.group(1)
+           after = m.group(2)
+           break
+    if not name:
+       for name_match in name_matchers_short:
+           m = name_match.match( given )
+           if m:
+              name = m.group(1)
+              break
+    if not name:
+       name = given
+       after = given
+
+    print( '', file=sys.stderr ) #debug
+    print( 'try name/', given, file=sys.stderr ) #debug
+    print( 'got name/', name, file=sys.stderr ) #debug
+
+    return [ name, after ]
+
+
 def start_child( p, remainder_of_line ):
     # inputs should have been 'strip()ed'
     # if the person was picked up as a child and is now a parent,
@@ -184,25 +210,9 @@ def start_child( p, remainder_of_line ):
        ross_id = m.group(2)
        after_name = m.group(3)
     else:
-       for name_match in name_matchers:
-           m = name_match.match( remainder_of_line )
-           if m:
-              name = m.group(1)
-              after_name = m.group(2)
-              break
-       if not name:
-          for name_match in name_matchers_short:
-              m = name_match.match( remainder_of_line )
-              if m:
-                 name = m.group(1)
-                 break
-       if not name:
-          name = remainder_of_line
-          after_name = remainder_of_line
-
-    print( '', file=sys.stderr ) #debug
-    print( 'try name/', remainder_of_line, file=sys.stderr ) #debug
-    print( 'got name/', name, file=sys.stderr ) #debug
+       name_parts = extract_name( remainder_of_line )
+       name = name_parts[0]
+       after_name = name_parts[1]
 
     results['name'] = name.strip()
     results['rossid'] = ross_id.strip()
