@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.2.4
+v0.3
 """
 
 import sys
@@ -174,10 +174,11 @@ def unquote_row( row_data ):
 
 
 def extract_name( given ):
+    #print( '', file=sys.stderr ) #debug
+    #print( 'try name/', given, file=sys.stderr ) #debug
+
     name = ''
     after = ''
-    print( '', file=sys.stderr ) #debug
-    print( 'try name/', given, file=sys.stderr ) #debug
 
     for name_match in name_matchers:
         m = name_match.match( given )
@@ -186,6 +187,7 @@ def extract_name( given ):
            after = m.group(2)
            break
     if not name:
+       # consider running this loop a second time to pick through multiple phrases
        for name_match in name_matchers_short:
            m = name_match.match( given )
            if m:
@@ -195,9 +197,7 @@ def extract_name( given ):
        name = given
        after = given
 
-
-    print( 'got name/', name, file=sys.stderr ) #debug
-
+    #print( 'got name/', name, file=sys.stderr ) #debug
     return [ name, after ]
 
 
