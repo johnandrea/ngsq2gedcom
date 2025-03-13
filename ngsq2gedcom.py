@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.1.1
+v0.1.3
 """
 
 import sys
@@ -47,17 +47,27 @@ child_marker = re.compile( '^(\\+)? ?(\\d+) [i|I|v|V|x|X]+\\. ?(.*)' )
 
 # line with name might contain the Ross MacKay id number
 # name-chars # digits comma|dot chars
+# 1/  given middle surname #123, details
 ross_numbered = re.compile( '([^#]+) #(\\d+)[,|\\.]?(.*)' )
 
 # more attempt to extract the name
+# in order of checking
+# 2/  given middle surname.
+# 3/  given mid. surname.
+# 4/  given middle surname, details
+# 5/  given middle surname. details
+# 6/  given middle surname b. date
+# 6/  given middle surname b. Abt date
 name_matchers = []
+name_matchers.append( re.compile( '^([\\w\\(\\) ]+), (.*)' ) ) #4
+name_matchers.append( re.compile( '^([\\w\\(\\) ]+) (b. \\d.*)' ) ) #6
+name_matchers.append( re.compile( '^([\\w\\(\\) ]+) (b. Abt.*)' ) ) #7
+name_matchers.append( re.compile( '^([\\w\\(\\) ]+)\\. (.*)' ) ) #4
+
+# short; as in no detail portion
 name_matchers_short = []
-name_comma = re.compile( '^([\\w\\(\\) ]+), (.*)' )
-name_dot = re.compile( '^([\\w\\(\\) ]+)\\. (.*)' )
-name_dot_end = re.compile( '^([\\w\\(\\) ]+)\\.$' )
-name_matchers.append( name_comma )
-name_matchers.append( name_dot )
-name_matchers_short.append( name_dot_end )
+name_matchers_short.append( re.compile( '^([\\w\\(\\) ]+)\\.$' ) ) #2
+# 3 ???
 
 # inside a children block
 in_children = False
@@ -157,11 +167,6 @@ def start_person( p, remainder_of_line ):
     results['famc'] = None
 
     # try to extract the name portion
-    # from strings like
-    # 1 = given middle surname #12345, more details
-    # 2 = given middle surname, more details
-    # 3 = given middle surname. more details
-    # 4 = ?
     name = ''
     ross_id = ''
     after_name = ''
@@ -187,6 +192,10 @@ def start_person( p, remainder_of_line ):
        if not name:
           name = remainder_of_line
           after_name = remainder_of_line
+
+    print( '', file=sys.stderr ) #debug
+    print( 'try name/', remainder_of_line, file=sys.stderr ) #debug
+    print( 'got name/', name, file=sys.stderr ) #debug
 
     results['name'] = name.strip()
     results['rossid'] = ross_id.strip()
