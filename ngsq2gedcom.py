@@ -7,9 +7,8 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.0.6
+v0.1
 """
-
 
 import sys
 import os
@@ -18,20 +17,23 @@ import csv
 
 # Assumptions and notes:
 #- output to stdout
-#- parameters: name of directory containing input file "layout.csv"
+#- parameter: name of directory containing input file "layout.csv"
 #- no consideration of special (non-ansi) characters
-#- children lines all include roman numeral burth orders
+#- children lines all include roman numeral birth orders
 #- sometimes the ocr messes up the location of the start children line
 #- surnames are the last word of a name portion (probebly wrong to assume)
 #- lines are processed in a state machine style
-#- sex is determined my the phrase "she married' or "he married" in the notes
+#- sex is determined my the phrase in the notes and common first names
 #- a person without a sex will be listed as HUSB in a family record
 #- INDI XREF values are taken from person numbers in the input
 
+# This particular version parses a document whic has "#numbers" following
+# the name (most of them) which becomes a REFN tag.
 
-# marker for debug info
-mark = ''
-unmark = '>>'
+
+## marker for debug info
+#mark = ''
+#unmark = '>>'
 
 # mark of a new person (but not inside child block)
 # ^ digits dot
