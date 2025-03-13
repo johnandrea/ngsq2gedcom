@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.0.4
+v0.0.6
 """
 
 
@@ -177,6 +177,8 @@ def show_people( indent, p ):
 def gedcom_indi( p ):
     print( '0 @I' + p + '@ INDI' )
     print( '1 NAME', people[p]['name'] )
+    print( '2 GIVN',  people[p]['givn'] )
+    print( '2 SURN',  people[p]['surn'] )
     if people[p]['notes']:
        size = len( people[p]['notes'] )
        prefix = '1 NOTE'
@@ -255,9 +257,15 @@ def process_people():
         people[p]['in-fams'] = in_fams
 
         # limit name size
-        name = people[p]['name']
-        if len( name ) > name_limit:
-           people[p]['name'] = name[:name_limit-1]
+        name_parts = people[p]['name'].replace('Dr. ','').replace('Rev. ','').split()
+        # instead - do this on the individual parts
+        #if len( name ) > name_limit:
+        #   people[p]['name'] = name[:name_limit-1]
+        given = ' '.join( name_parts[:len(name_parts)-1] )
+        surname = name_parts[-1]
+        people[p]['givn'] = given[:name_limit-1].strip()
+        people[p]['surn'] = surname[:name_limit-1].strip()
+        people[p]['name'] = people[p]['givn'] + ' /' + people[p]['surn'] + '/'
 
 
 with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
