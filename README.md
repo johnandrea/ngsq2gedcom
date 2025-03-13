@@ -12,6 +12,7 @@ At this early stage, read the code for a list of assumptions and conversion note
 ## Data Assumptions
 - parent name rows begin with "number period space"
 - child name rows begin with "optional-plus number spave roman-numeral-birth-order optional-period space"
+- the surname (SURN) will be the last word part of each name. Might not always be correct.
 
 ## Notes on variants:
 - the document in hand has "b. DATE" after a person's name
