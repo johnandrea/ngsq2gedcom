@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.4.0
+v0.4.1
 """
 
 import sys
@@ -116,6 +116,18 @@ note_limit = 246
 # subtract len( '1 name //' ) = 9 , plus 2
 name_limit = 110
 
+# need to backtrack when OCR separates numbers and roman numerals from name lines
+# example
+# + 10
+# 11
+# vii. NAME10.
+# + 12
+# viii. NAME11, b. 17 Jul 
+# 13
+# ix. NAME12 b. Abt 1927.
+# X. NAME13, b. Abt 1933 in
+# Oh, this is a mess. Maybe detect the problem and fail with message.
+
 # common names to help determine sex
 # note, all lowercase
 females = ['adele', 'alice', 'amelia', 'andrea', 'ann', 'annie', 'antoinette',
@@ -174,8 +186,8 @@ def unquote_row( row_data ):
 
 
 def extract_name( given ):
-    #print( '', file=sys.stderr ) #debug
-    #print( 'try name/', given, file=sys.stderr ) #debug
+    print( '', file=sys.stderr ) #debug
+    print( 'try name/', given, file=sys.stderr ) #debug
 
     name = ''
     after = ''
@@ -197,7 +209,7 @@ def extract_name( given ):
        name = given
        after = given
 
-    #print( 'got name/', name, file=sys.stderr ) #debug
+    print( 'got name/', name, file=sys.stderr ) #debug
     return [ name, after ]
 
 
