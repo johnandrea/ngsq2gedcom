@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.1.3
+v0.2.0
 """
 
 import sys
@@ -154,17 +154,20 @@ def unquote_row( row_data ):
     return output
 
 
-def start_person( p, remainder_of_line ):
+def start_child( p, remainder_of_line ):
     # inputs should have been 'strip()ed'
+    # if the person was picked up as a child and is now a parent,
+    #    replace these items
     results = dict()
     results['name'] = ''
     results['sex'] = ''
     results['rossid'] = ''
     results['lines'] = []
     results['children'] = []
-    # this person might not have any children, but setup a family number
-    results['fams'] = p
     results['famc'] = None
+    # this person might not have any children, but setup a family number
+    # equal to person number
+    results['fams'] = p
 
     # try to extract the name portion
     name = ''
@@ -281,7 +284,8 @@ def process_people():
             whole_note += ' ' + line
         people[p]['notes'] = whole_note.replace( '  ', ' ' ).replace( '  ', ' ' ).strip()
 
-        # might not have any children, but if married then in a family
+        # might not have any children,
+        # but family record usable if children or in marriage
         in_fams = len(people[p]['children']) > 0
         sex = ''
         if 'He married' in people[p]['notes']:
@@ -352,12 +356,17 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
             in_children = False
             person_n = m.group(1).strip()
             remainder = m.group(2).strip()
-            people[person_n] = start_person( person_n, remainder )
             # check for ocr mistake
             if remainder.endswith( ' Children:' ):
                in_children = True
             if first_person is None:
                first_person = person_n
+               # only the first person is like a child because of no parents
+               people[person_n] = start_child( person_n, remainder )
+            else:
+               # every, except first, parent should already have been seen
+               # so just add the line part, though this will include name
+               people[person_n]['lines'].append( remainder )
             current_parent = person_n
             current_person = person_n
             continue
@@ -370,7 +379,8 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
                # 123 vii. name-part detail-part
                person_n = m.group(2).strip()
                remainder = m.group(3).strip()
-               people[person_n] = start_person( person_n, remainder )
+               # this child might become a parent later
+               people[person_n] = start_child( person_n, remainder )
                current_person = person_n
                # parent family includes this child
                people[current_parent]['children'].append( person_n )
