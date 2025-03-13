@@ -75,33 +75,33 @@ note_limit = 246
 name_limit = 110
 
 # common names to help determine sex
-females = ['Adele', 'Alice', 'Amelia', 'Andrea', 'Ann', 'Annie', 'Antoinette',
-           'Aurora', 'Barbara', 'Bernice', 'Carol', 'Catherine', 'Cecilia',
-           'Cynthia', 'Daphne', 'Denise', 'Donna', 'Elizabeth', 'Emily', 'Esme',
-           'Esther', 'Eugenia', 'Eva', 'Evelyn', 'Farrah', 'Gail', 'Geneva',
-           'Genevieve', 'Genie', 'Hazel', 'Helen', 'Hindth', 'Irene', 'Isabelle',
-           'Jamalie', 'Jane', 'Janet', 'Jean', 'Joan', 'Josephine', 'Joyce', 'Julia',
-           'Julie', 'Juliet', 'Juliette', 'Karen', 'Katherine', 'Kyla', 'Lillian',
-           'Linda', 'Loretta', 'Lorraine', 'Louise', 'Lulu', 'Lynn', 'Madeline',
-           'Mamie', 'Margaret', 'Marguerite', 'Maria', 'Mariam', 'Marie', 'Marina',
-           'Marion', 'Martha', 'Mary', 'Matilda', 'Mercedes', 'Meriana', 'Minera',
-           'Morena', 'Nancy', 'Odette', 'Patricia', 'Paula', 'Paulette', 'Rebecca',
-           'Regina', 'Rita', 'Roberta', 'Rochelle', 'Rosa', 'Rose', 'Sadie', 'Sandra',
-           'Sarah', 'Sarrauff', 'Serena', 'Sevilla', 'Shaheedy', 'Shela', 'Shirley',
-           'Sister', 'Suraya', 'Susan', 'Suzette', 'Sylvia', 'Theresa', 'Thresa',
-           'Veronica', 'Victoria', 'Virginia', 'Yamile', 'Yvonne']
-males = ['Abdullah', 'Abraham', 'Adrian', 'Albert', 'Allan', 'Alsyus', 'Anthony',
-         'Antonio', 'Badaoui', 'Boutrous', 'Brent', 'Brian', 'Cameron', 'Charles',
-         'Chester', 'Christopher', 'Daniel', 'Dave', 'David', 'Derek', 'Edward',
-         'Elias', 'Eugene', 'Felix', 'Francis', 'Frank', 'Fred', 'Frederick',
-         'Gabriel', 'Garth', 'Gary', 'George', 'Gerald', 'Gordon', 'Haid', 'Harold',
-         'James', 'Jerges', 'Jerry', 'John', 'Jorge', 'Joseph', 'Kevin', 'Khalil',
-         'Louis', 'Male', 'Marshall', 'Maurice', 'Michael', 'Nahman', 'Paul', 'Peter',
-         'Philip', 'Pierre', 'Rafoul', 'Randolph', 'Raymond', 'Rev.', 'Richard',
-         'Rob', 'Robert', 'Roger', 'Ronald', 'Ronnie', 'Roy', 'Salim', 'Salomon',
-         'Simon', 'Stephan', 'Tannous', 'Thomas', 'Tony', 'Vincent', 'Wadih',
-         'William', 'Youssef']
-
+# note, all lowercase
+females = ['adele', 'alice', 'amelia', 'andrea', 'ann', 'annie', 'antoinette',
+           'aurora', 'barbara', 'bernice', 'carol', 'catherine', 'cecilia',
+           'cynthia', 'daphne', 'denise', 'donna', 'elizabeth', 'emily', 'esme',
+           'esther', 'eugenia', 'eva', 'evelyn', 'farrah', 'gail', 'geneva',
+           'genevieve', 'genie', 'hazel', 'helen', 'hindth', 'irene', 'isabelle',
+           'jamalie', 'jane', 'janet', 'jean', 'joan', 'josephine', 'joyce', 'julia',
+           'julie', 'juliet', 'juliette', 'karen', 'katherine', 'kyla', 'lillian',
+           'linda', 'loretta', 'lorraine', 'louise', 'lulu', 'lynn', 'madeline',
+           'mamie', 'margaret', 'marguerite', 'maria', 'mariam', 'marie', 'marina',
+           'marion', 'martha', 'mary', 'matilda', 'mercedes', 'meriana', 'minera',
+           'morena', 'nancy', 'odette', 'patricia', 'paula', 'paulette', 'rebecca',
+           'regina', 'rita', 'roberta', 'rochelle', 'rosa', 'rose', 'sadie', 'sandra',
+           'sarah', 'sarrauff', 'serena', 'sevilla', 'shaheedy', 'shela', 'shirley',
+           'sister', 'suraya', 'susan', 'suzette', 'sylvia', 'theresa', 'thresa',
+           'veronica', 'victoria', 'virginia', 'yamile', 'yvonne']
+males = ['abdullah', 'abraham', 'adrian', 'albert', 'allan', 'alsyus', 'anthony',
+         'antonio', 'badaoui', 'boutrous', 'brent', 'brian', 'cameron', 'charles',
+         'chester', 'christopher', 'daniel', 'dave', 'david', 'derek', 'edward',
+         'elias', 'eugene', 'felix', 'francis', 'frank', 'fred', 'frederick',
+         'gabriel', 'garth', 'gary', 'george', 'gerald', 'gordon', 'haid', 'harold',
+         'james', 'jerges', 'jerry', 'john', 'jorge', 'joseph', 'kevin', 'khalil',
+         'louis', 'male', 'marshall', 'maurice', 'michael', 'nahman', 'paul', 'peter',
+         'philip', 'pierre', 'rafoul', 'randolph', 'raymond', 'rev.', 'richard',
+         'rob', 'robert', 'roger', 'ronald', 'ronnie', 'roy', 'salim', 'salomon',
+         'simon', 'stephan', 'tannous', 'thomas', 'tony', 'vincent', 'wadih',
+         'william', 'youssef']
 
 
 def gedcom_header():
@@ -244,7 +244,8 @@ def process_people():
            sex = 'F'
            in_fams = True
         if not sex:
-           first_name = people[p]['name'].split()[0]
+           # compare the first name to the lists of common names
+           first_name = people[p]['name'].split()[0].lower()
            if first_name in males:
               sex = 'M'
            elif first_name in females:
@@ -252,6 +253,7 @@ def process_people():
         people[p]['sex'] = sex
 
         people[p]['in-fams'] = in_fams
+
         # limit name size
         name = people[p]['name']
         if len( name ) > name_limit:
