@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.3
+v0.4.0
 """
 
 import sys
@@ -387,8 +387,9 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
             in_children = False
             person_n = m.group(1).strip()
             remainder = m.group(2).strip()
-            # check for ocr mistake
-            if remainder.endswith( ' Children:' ):
+            #print( 'parent', person_n, content, file=sys.stderr ) #debug
+            # check for ocr mistake at the end of any line in a parent
+            if content.endswith( ' Children:' ):
                in_children = True
             if first_person is None:
                first_person = person_n
@@ -403,6 +404,7 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
             continue
 
          if in_children:
+            #print( 'in children', file=sys.stderr ) #debug
             m = child_marker.match( content )
             if m:
                # +123 vii. name-part detail-part
@@ -410,6 +412,7 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
                # 123 vii. name-part detail-part
                person_n = m.group(2).strip()
                remainder = m.group(3).strip()
+               #print( 'child', person_n, content, file=sys.stderr ) #debug
                # this child might become a parent later
                people[person_n] = start_child( person_n, remainder )
                current_person = person_n
@@ -418,6 +421,10 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
                # belong to parent family
                people[person_n]['famc'] = people[current_parent]['fams']
                continue
+         else:
+            # check for ocr mistake at the end of any line in a parent
+            if content.endswith( ' Children:' ):
+               in_children = True
 
          if first_person is not None:
             people[current_person]['lines'].append( content )
