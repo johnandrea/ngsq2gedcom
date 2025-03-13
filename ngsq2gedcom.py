@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.2.2
+v0.2.4
 """
 
 import sys
@@ -52,26 +52,41 @@ ross_numbered = re.compile( '([^#]+) #(\\d+)[,|\\.]?(.*)' )
 
 # more attempt to extract the name
 # in order of checking
-# 2/  given middle surname.
-# 3/  given initial. surname.
-# 4/  given middle surname, details
-# 5/  given middle surname. details
-# 6/  given middle surname b. date
-# 7/  given middle surname b. Abt date
-# 8/  given initial. surname b. date
-# 9/  given initial. surname b. Abt date
+# use non-greedy match for name section
+# 2/  first middle surname. b. date...
+# 3/  first middle surname, b. date...
+# 4/  first middle surname b. date...
+# 5/  first middle surname. b. Abt date...
+# 6/  first middle surname, b. Abt date...
+# 7/  first middle surname b. Abt date...
+# also use died "d. " but check on born first
+# also use "bef date" and "aft date"
+# 8 like 2,3,4 but month with no day
+# 9/  name. She|He married...
+# 10/ name. Single....
+# 11/ name. town in year...
+# 12/ name. town when father died...
+# x/ name. town-name...
+
 name_matchers = []
-name_matchers.append( re.compile( '^([\\w\\(\\) ]+), (.*)' ) ) #4
-name_matchers.append( re.compile( '^([\\w\\(\\) ]+) (b. \\d.*)' ) ) #6
-name_matchers.append( re.compile( '^([\\w\\(\\) ]+) (b. Abt.*)' ) ) #7
-name_matchers.append( re.compile( '^([\\w\\(\\) ]+)\\. (.*)' ) ) #5
-name_matchers.append( re.compile( '^(\\w+ [A-Z]\\. \\w+) (b. \\d.*)' ) ) #8
-name_matchers.append( re.compile( '^(\\w+ [A-Z]\\. \\w+) (b. Abt.*)' ) ) #9
+name_matchers.append( re.compile( '^(.*?)[,|\\.]? (b\\. \\d+ .*)' ) ) #2, 3, 4
+name_matchers.append( re.compile( '^(.*?)[,|\\.]? (b\\. [A|a]bt .*)' ) ) #5, 6, 7
+name_matchers.append( re.compile( '^(.*?)[,|\\.]? (b\\. [B|b]ef .*)' ) ) #5, 6, 7 + bef
+name_matchers.append( re.compile( '^(.*?)[,|\\.]? (b\\. [A|a]ft .*)' ) ) #5, 6, 7 + aft
+name_matchers.append( re.compile( '^(.*?)[,|\\.]? (d\\. \\d+ .*)' ) ) #2, 3, 4 dief
+name_matchers.append( re.compile( '^(.*?)[,|\\.]? (d\\. [A|a]bt .*)' ) ) #5, 6, 7 died
+name_matchers.append( re.compile( '^(.*?)[,|\\.]? (d\\. [B|b]ef .*)' ) ) #5, 6, 7 died + bef
+name_matchers.append( re.compile( '^(.*?)[,|\\.]? (d\\. [A|a]ft .*)' ) ) #5, 6, 7 died + aft
+name_matchers.append( re.compile( '^(.*?)[,|\\.]? (b\\. [A-Z][a-z][a-z] \\d.*)' ) ) #8
+name_matchers.append( re.compile( '^(.*?)[,|\\.]? (d\\. [A-Z][a-z][a-z] \\d.*)' ) ) #8 died
+name_matchers.append( re.compile( '^(.*?)\\. (S?[H|h]e married.*)' ) ) #9
+name_matchers.append( re.compile( '^(.*?)\\. (Single\\..*)' ) ) #10
+name_matchers.append( re.compile( '^(.*?)\\. ([A-Za-z, ]+? in \\d\\d\\d\\d.*)' ) ) #11
+name_matchers.append( re.compile( '^(.*?)\\. ([A-Za-z, ]+? when father died)' ) ) #12
 
 # short; as in no detail portion
 name_matchers_short = []
-name_matchers_short.append( re.compile( '^([\\w\\(\\) ]+)\\.$' ) ) #2
-# 3 ???
+name_matchers_short.append( re.compile( '^([\\w\\(\\) ]+)\\.$' ) )
 
 # inside a children block
 in_children = False
@@ -161,6 +176,9 @@ def unquote_row( row_data ):
 def extract_name( given ):
     name = ''
     after = ''
+    print( '', file=sys.stderr ) #debug
+    print( 'try name/', given, file=sys.stderr ) #debug
+
     for name_match in name_matchers:
         m = name_match.match( given )
         if m:
@@ -177,8 +195,7 @@ def extract_name( given ):
        name = given
        after = given
 
-    print( '', file=sys.stderr ) #debug
-    print( 'try name/', given, file=sys.stderr ) #debug
+
     print( 'got name/', name, file=sys.stderr ) #debug
 
     return [ name, after ]
