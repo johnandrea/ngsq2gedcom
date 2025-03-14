@@ -1,0 +1,40 @@
+0 HEAD
+1 SOUR ProgramGenerated
+1 SUBM @S1@
+1 GEDC
+2 VERS 5.5.1
+2 FORM LINEAGE-LINKED
+1 CHAR UTF-8
+0 @S1@ SUBM
+1 NAME John Andrea
+0 @I1@ INDI
+1 NAME First /Parent/
+2 GIVN First
+2 SURN Parent
+1 NOTE He married Mary Details on parent More on parent
+1 SEX M
+1 FAMS @F1@
+0 @I2@ INDI
+1 NAME Oldest /Child/
+2 GIVN Oldest
+2 SURN Child
+1 NOTE b. 15 Apr 1883. Detail on oldest child
+1 FAMC @F1@
+0 @I3@ INDI
+1 NAME Second /Child/
+2 GIVN Second
+2 SURN Child
+1 NOTE Mexico in 1949.
+1 FAMC @F1@
+0 @I4@ INDI
+1 NAME Third /Child/
+2 GIVN Third
+2 SURN Child
+1 NOTE b. 15 May 1905 Detail for third.
+1 FAMC @F1@
+0 @F1@ FAM
+1 HUSB @I1@
+1 CHIL @I2@
+1 CHIL @I3@
+1 CHIL @I4@
+0 TRLR
