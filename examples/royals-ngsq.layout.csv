@@ -1,0 +1,81 @@
+'Page number,'Layout,'Text,'Reading Order,'Confidence score % (Layout)
+'1,'Section header 1,"'First Generation",'0,'44.75097656
+'1,'Text 1,"'1. Elizabeth II Alexandra Mary Windsor Queen of England was born on 21 Apr 1926 in 17 Bruton St., London, W1, England. She died on 8 Sep 2022 at the age of 96 in Balmoral Castle, Scotland. Elizabeth II Alexandra Mary Windsor Queen of England and Philip Mountbatten Prince were married on 20 Nov 1947 in Westminster, Abbey, London, England.",'1,'96.92382813
+'1,'Text 2,"'Philip Mountbatten Prince was born on 10 Jun 1921 in Isle of Kerkira, Mon Repos, Corfu, Greece. He died on 9 Apr 2021 at the age of 99 in Windsor, England.",'2,'90.57617188
+'1,'Text 3,"'Philip Mountbatten and Elizabeth Alexandra Mary Windsor had the following children:",'3,'91.60156250
+'1,'List 1,"",'4,'84.13085938
+'1,'Text 4 - Part of List 1,"'+2 i Charles Philip Arthur Windsor King Charles III, born 14 Nov 1948, Buckingham, Palace, London, England; married Diana Frances Spencer Princess of Wales, 29 Jul 1981, St. Paul's, Cathedral, London, England; married Camilla Rosemary Shand, 9 Apr 2005, London, England.",'5,'96.28906250
+'1,'Text 5 - Part of List 1,"'+3 ii Anne Elizabeth Alice Windsor Princess, born 15 Aug 1950, Clarence House, St. James, England; married Mark Anthony Peter Phillips Captain, 14 Nov 1973, Westminster, Abbey, London, England; married Timothy Laurence, 12 Dec 1992, Balmoral, Scotland.",'6,'96.53320313
+'1,'Text 6 - Part of List 1,"'+4 iii Andrew Albert Christian Windsor Duke of York, born 19 Feb 1960, Belgian Suite, Buckingham, Palace, England; married Sarah Margaret Ferguson Duchess of York, 23 Jul 1986, Westminster, Abbey, London, England.",'7,'97.02148438
+'1,'Text 7 - Part of List 1,"'+5 iv Edward Anthony Richard Windsor Earl of Wessex, born 10 Mar 1964, Buckingham, Palace, London, England; married Sophie Helen Rhys-Jones Countess of Wessex, 19 Jun 1999, London, England.",'8,'96.63085938
+'1,'Section header 2,"'Second Generation",'9,'83.69140625
+'1,'Text 8,"'2. Charles Philip Arthur Windsor King Charles III was born on 14 Nov 1948 in Buckingham, Palace, London, England. He was christened on 15 Dec 1948 in Buckingham, Palace, Music Room, England. He was also known as Charles III. Charles Philip Arthur Windsor King Charles III and Diana Frances Spencer Princess of Wales were married on 29 Jul 1981 in St. Paul's, Cathedral, London, England. They were separated in Dec 1992. They were divorced on 28 Aug 1996.",'10,'96.43554688
+'1,'Text 9,"'Diana Frances Spencer Princess of Wales, daughter of John Spencer and Frances Shand Kydd, was born on 1 Jul 1961 in Park House, Sandringham, Norfolk, England. She died on 6 Sep 1997 at the age of 36 in Paris, France. She was christened in Sandringham, Church, Norfolk, England.",'11,'95.55664063
+'1,'Text 10,"'Charles Philip Arthur Windsor and Diana Frances Spencer had the following children:",'12,'94.33593750
+'1,'List 2,"",'13,'83.30078125
+'1,'Text 11 - Part of List 2,"'+6 i William Arthur Philip Windsor Prince of Wales, born 21 Jun 1982, St. Mary's Hosp., Paddington, London, England; married Catherine Middleton Princess of Wales, 29 Apr 2011, London, England.",'14,'96.04492188
+'1,'Text 12 - Part of List 2,"'+7 ii Henry Charles Albert ""Harry"" Windsor Duke of Sussex, born 15 Sep 1984, St. Mary's Hosp., Paddington, London, England; married Rachel Meghan Markle Duchess of Sussex, 19 May 2018, London, England.",'15,'96.19140625
+'1,'Text 13,"'Charles Philip Arthur Windsor King Charles III and Camilla Rosemary Shand were engaged on 10 Feb 2005. They were married on 9 Apr 2005 in London, England.",'16,'70.99609375
+'1,'Text 14,"'Camilla Rosemary Shand was born on 17 Jul 1947 in London, England.",'17,'52.53906250
+'2,'List 3,"",'18,'33.20312500
+'2,'Text 15 - Part of List 3,"'3. Anne Elizabeth Alice Windsor Princess was born on 15 Aug 1950 in Clarence House, St. James, England. She was christened on 21 Oct 1950 in England. Anne Elizabeth Alice Windsor Princess and Mark Anthony Peter Phillips Captain were married on 14 Nov 1973 in Westminster, Abbey, London, England. They were divorced on 23 Apr 1992.",'19,'98.43750000
+'2,'Text 16 - Part of List 3,"'Mark Anthony Peter Phillips Captain was born on 22 Sep 1948.",'20,'78.85742188
+'2,'Text 17 - Part of List 3,"'Mark Anthony Peter Phillips and Anne Elizabeth Alice Windsor had the following children:",'21,'92.18750000
+'2,'Text 18 - Part of List 3,"'+8 i Peter Mark Andrew Phillips, born 15 Nov 1977, St. Mary's Hosp., Paddington, London, England; married Autumn Kelly, 2008.",'22,'92.82226563
+'2,'Text 19 - Part of List 3,"'+9 ii Zara Anne Elizabeth Phillips, born 15 May 1981, St. Marys Hosp., Paddington, London, England; married Mike Tindall, 2011.",'23,'93.21289063
+'2,'Text 20 - Part of List 3,"'Anne Elizabeth Alice Windsor Princess and Timothy Laurence were married on 12 Dec 1992 in Balmoral, Scotland.",'24,'89.99023438
+'2,'Text 21 - Part of List 3,"'Timothy Laurence was born on 1 Mar 1955 in London, England.",'25,'88.08593750
+'2,'Text 22 - Part of List 3,"'4. Andrew Albert Christian Windsor Duke of York was born on 19 Feb 1960 in Belgian Suite, Buckingham, Palace, England. Andrew Albert Christian Windsor Duke of York and Sarah Margaret Ferguson Duchess of York were married on 23 Jul 1986 in Westminster, Abbey, London, England. They were separated on 9 Mar 1992. They were divorced on 30 May 1996.",'26,'90.03906250
+'2,'Text 23 - Part of List 3,"'Sarah Margaret Ferguson Duchess of York was born on 15 Oct 1959 in 27 Welbech St., Marylebone, London, England.",'27,'89.20898438
+'2,'Text 24 - Part of List 3,"'Andrew Albert Christian Windsor and Sarah Margaret Ferguson had the following children:",'28,'90.72265625
+'2,'Text 25 - Part of List 3,"'+10",'29,'99.75290680
+'2,'Text 26 - Part of List 3,"'i Beatrice Elizabeth Mary Windsor Princess of York, born 8 Aug 1988, Portland Hosp., England; married Edoardo Mapelli Mozzi, 2020.",'30,'89.45312500
+'2,'Text 27 - Part of List 3,"'+11 ii Eugenie Victoria Helena Windsor Princess of York, born 23 Mar 1990, London, England; married Jack Brooksbank, 12 Oct 2018.",'31,'93.84765625
+'2,'Text 28 - Part of List 3,"'5. Edward Anthony Richard Windsor Earl of Wessex was born on 10 Mar 1964 in Buckingham, Palace, London, England. He was christened on 2 May 1964. Edward Anthony Richard Windsor Earl of Wessex and Sophie Helen Rhys-Jones Countess of Wessex were married on 19 Jun 1999 in London, England.",'32,'87.59765625
+'2,'Text 29 - Part of List 3,"'Sophie Helen Rhys-Jones Countess of Wessex was born on 20 Jan 1965 in Oxford, England.",'33,'83.83789063
+'2,'Text 30 - Part of List 3,"'Edward Anthony Richard Windsor and Sophie Helen Rhys-Jones had the following children:",'34,'86.66992188
+'2,'Text 31 - Part of List 3,"'12 i Louise Alice Elizabeth Mary Windsor Lady was born on 8 Nov 2003 in Surrey, England.",'35,'70.01953125
+'2,'Text 32 - Part of List 3,"'13",'36,'99.68600464
+'2,'Text 33 - Part of List 3,"'ii James Alexander Philip Theo Windsor Viscount Severn was born on 17 Dec 2007 in Surrey, England.",'37,'75.58593750
+'2,'Text 34,"'Third Generation",'38,'43.50585938
+'2,'Text 35,"'6. William Arthur Philip Windsor Prince of Wales was born on 21 Jun 1982 in St. Mary's Hosp., Paddington,",'39,'89.30664063
+'3,'Text 36,"'London, England. He was christened on 4 Aug 1982 in Music Room, Buckingham, Palace, England. William Arthur Philip Windsor Prince of Wales and Catherine ""Kate"" Middleton Princess of Wales were married on 29 Apr 2011 in London, England.",'40,'95.01953125
+'3,'Text 37,"'Catherine ""Kate"" Middleton Princess of Wales, daughter of Michael Middleton and Carole Elizabeth Goldsmith, was born on 9 Jan 1982 in Reading, England.",'41,'98.29101563
+'3,'Text 38,"'William Arthur Philip Windsor and Catherine Middleton had the following children:",'42,'95.84960938
+'3,'List 4,"",'43,'87.84179688
+'3,'Text 39 - Part of List 4,"'14 i George Alexander Louis Windsor Prince of Wales was born on 22 Jul 2013 in London, England.",'44,'96.82617188
+'3,'Text 40 - Part of List 4,"'15",'45,'99.94201660
+'3,'Text 41 - Part of List 4,"'ii Charlotte Elizabeth Diana Windsor Princess of Wales was born on 2 May 2015 in London, England.",'46,'95.84960938
+'3,'Text 42 - Part of List 4,"'16",'47,'99.86793518
+'3,'Text 43 - Part of List 4,"'iii Louis Arthur Charles Windsor Princes of Wales was born on 23 Apr 2018 in London, England.",'48,'94.04296875
+'3,'Text 44,"'7. Henry Charles Albert ""Harry"" Windsor Duke of Sussex was born on 15 Sep 1984 in St. Mary's Hosp., Paddington, London, England. Henry Charles Albert ""Harry"" Windsor Duke of Sussex and Rachel Meghan Markle Duchess of Sussex were married on 19 May 2018 in London, England.",'49,'95.01953125
+'3,'Text 45,"'Rachel Meghan Markle Duchess of Sussex, daughter of Thomas Markle and Doria Ragland, was born on 4 Aug 1981 in Los Angeles, California.",'50,'96.48437500
+'3,'Text 46,"'Henry Charles Albert Windsor and Rachel Meghan Markle had the following children:",'51,'95.80078125
+'3,'List 5,"",'52,'79.19921875
+'3,'Text 47 - Part of List 5,"'17 i Archie Harrison Windsor was born on 6 May 2019 in London, England.",'53,'96.77734375
+'3,'Text 48 - Part of List 5,"'18 ii Lilibet Diana Windsor was born on 4 Jun 2021 in Santa Barbara, California.",'54,'97.31445313
+'3,'Text 49,"'8. Peter Mark Andrew Phillips was born on 15 Nov 1977 in St. Mary's Hosp., Paddington, London, England. He was christened on 22 Dec 1977 in Music Room, Buckingham, Palace, England. Peter Mark Andrew Phillips and Autumn Kelly were married in 2008. They were divorced in 2021.",'55,'94.77539063
+'3,'Text 50,"'Autumn Kelly was born in Canada.",'56,'93.31054688
+'3,'Text 51,"'Peter Mark Andrew Phillips and Autumn Kelly had the following children:",'57,'96.09375000
+'3,'List 6,"",'58,'77.78320313
+'3,'Text 52 - Part of List 6,"'19 i Savannah Phillips was born in 2010.",'59,'97.16796875
+'3,'Text 53 - Part of List 6,"'20 ii Isla Phillips was born in 2012.",'60,'96.38671875
+'3,'Text 54,"'9. Zara Anne Elizabeth Phillips was born on 15 May 1981 in St. Marys Hosp., Paddington, London, England. Zara Anne Elizabeth Phillips and Mike Tindall were married in 2011.",'61,'92.28515625
+'3,'Text 55,"'Mike Tindall was born on 18 Oct 1978.",'62,'88.57421875
+'3,'Text 56,"'Mike Tindall and Zara Anne Elizabeth Phillips had the following children:",'63,'94.67773438
+'3,'List 7,"",'64,'70.01953125
+'3,'Text 57 - Part of List 7,"'21 i Mia Grace Tindall was born in 2014.",'65,'88.91601563
+'3,'Text 58 - Part of List 7,"'22 ii Lena Elizabeth Tindall was born in 2018.",'66,'89.84375000
+'4,'Text 59,"'Lucas Philip Tindall was born in 2021.",'67,'34.76562500
+'4,'List 8,"",'68,'80.17578125
+'4,'Text 60 - Part of List 8,"'10. Beatrice Elizabeth Mary Windsor Princess of York was born on 8 Aug 1988 in Portland Hosp., England. Beatrice Elizabeth Mary Windsor Princess of York and Edoardo Mapelli Mozzi were married in 2020.",'69,'86.86523438
+'4,'Text 61 - Part of List 8,"'Edoardo Mapelli Mozzi, son of Alessandro Mapelli Mozzi and Nikki Williams-Ellis, was born in 1984.",'70,'84.86328125
+'4,'Text 62 - Part of List 8,"'Edoardo Mapelli Mozzi and Beatrice Elizabeth Mary Windsor had the following child:",'71,'85.74218750
+'4,'Text 63 - Part of List 8,"'24 i Sienna Elizabeth Mapelli Mozzi was born in 2021.",'72,'91.99218750
+'4,'Text 64 - Part of List 8,"'11. Eugenie Victoria Helena Windsor Princess of York was born on 23 Mar 1990 in London, England. She was christened on 23 Dec 1990 in Sandringham, England. Eugenie Victoria Helena Windsor Princess of York and Jack Brooksbank were married on 12 Oct 2018.",'73,'94.48242188
+'4,'Text 65 - Part of List 8,"'Jack Brooksbank was born (date unknown).",'74,'89.16015625
+'4,'Text 66 - Part of List 8,"'Jack Brooksbank and Eugenie Victoria Helena Windsor had the following child:",'75,'93.50585938
+'4,'Text 67 - Part of List 8,"'25 i August Philip Hawke Brooksbank was born on 9 Feb 2021.",'76,'64.25781250
+'5,'Text 68,"'BROOKSBANK August Philip Hawke (b. 2021) 4 Jack 4 FERGUSON Sarah Margaret Duchess of York (b. 1959) 2 GOLDSMITH Carole Elizabeth (b. 1955) 3 KELLY Autumn 3 LAURENCE Timothy (b. 1955) 2 MAPELLI MOZZI Alessandro 4 Edoardo (b. 1984) 4 Sienna Elizabeth (b. 2021) 4 MARKLE Rachel Meghan Duchess of Sussex (b. 1981) 3 Thomas (b. 1944) 3 MIDDLETON Catherine Princess of Wales (b. 1982) 3 Michael (b. 1949) 3 MOUNTBATTEN Philip Prince (b. 1921) 1 PHILLIPS Isla (b. 2012) 3 Mark Anthony Peter Captain (b. 1948) 2 Peter Mark Andrew (b. 1977) 2-3 Savannah (b. 2010) 3 Zara Anne Elizabeth (b. 1981) 2- - 3 RAGLAND Doria (b. 1956) 3 RHYS-JONES Sophie Helen Countess of Wessex (b. 1965) 2 SHAND Camilla Rosemary (b. 1947) 1 SHAND KYDD Frances 1 SPENCER Diana Frances Princess of Wales (b. 1961) 1 John 1 TINDALL Lena Elizabeth (b. 2018) 3 Lucas Philip (b. 2021) 3 Mia Grace (b. 2014) 3",'77,'67.67578125
+'5,'Text 69,"'Mike (b. 1978) 3 WILLIAMS-ELLIS Nikki 4 WINDSOR Andrew Albert Christian Duke of York (b. 1960) 1-2 Anne Elizabeth Alice Princess (b. 1950) 1-2 Archie Harrison (b. 2019) 3 Beatrice Elizabeth Mary Princess of York (b. 1988) 2, 4 Charles Philip Arthur King Charles III (b. 1948) 1 Charlotte Elizabeth Diana Princess of Wales (b. 2015) 3 Edward Anthony Richard Earl of Wessex (b. 1964) 1-2 Elizabeth_II Alexandra Mary Queen of England (b. 1926) 1 Eugenie Victoria Helena Princess of York (b. 1990) 2, 4 George Alexander Louis Prince of Wales (b. 2013) 3 Henry Charles Albert Duke of Sussex (b. 1984) 1, 3 James Alexander Philip Theo Viscount Severn (b. 2007) 2 Lilibet Diana (b. 2021) 3 Louis Arthur Charles Princes of Wales (b. 2018) 3 Louise Alice Elizabeth Mary Lady (b. 2003) 2 William Arthur Philip Prince of Wales (b. 1982) 1-2",'78,'76.46484375
+'6,'Text 70,"'California Los Angeles 3 Santa Barbara 3 Canada 3 England 2 London 1-4 Abbey Westminster 1-2 Cathedral St. Paul's 1 Marylebone 27 Welbech St. 2 Paddington St. Mary's Hosp. 1-3 St. Marys Hosp. 2-3 Palace Buckingham 1-2 Music Room Palace Buckingham 1 Norfolk Church Sandringham 1 Sandringham Park House 1 Oxford 2 Palace Buckingham Belgian Suite 1-2 Music Room 3 Portland Hosp. 2, 4 Reading 3 Sandringham 4 St. James Clarence House 1-2 Surrey 2 W1 London 17 Bruton St. 1 Windsor 1 France Paris 1 Greece Corfu Mon Repos Isle of Kerkira 1 Scotland Balmoral 1-2 Balmoral Castle 1",'79,'63.33007813
