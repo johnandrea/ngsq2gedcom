@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.5.1
+v0.5.2
 """
 
 import sys
@@ -372,9 +372,13 @@ def process_people():
 
 def broken_recovery():
     global backtrack
+    global people
+
     print( 'recover backtrack', file=sys.stderr ) #debug
     for line in backtrack:
         print( line, file=sys.stderr ) #debug
+
+    # all done, erase the saved line
     backtrack = []
 
 
@@ -465,7 +469,7 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
              m = check_broken[1].match( content )
              if m:
                 broken_reason = check_broken[0]
-                print( 'WARN broken line/', broken_reason, '/', content, file=sys.stderr ) #debug
+                #print( 'WARN broken line/', broken_reason, '/', content, file=sys.stderr ) #debug
          if broken_reason:
             backtrack.append( [broken_reason, content] )
          else:
