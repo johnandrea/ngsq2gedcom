@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.5.0
+v0.5.1
 """
 
 import sys
@@ -177,6 +177,7 @@ def gedcom_header():
 1 CHAR UTF-8
 0 @S1@ SUBM
 1 NAME John Andrea''' )
+
 
 def gedcom_trailer():
     print( '0 TRLR' )
@@ -369,6 +370,14 @@ def process_people():
         people[p]['name'] = people[p]['givn'] + ' /' + people[p]['surn'] + '/'
 
 
+def broken_recovery():
+    global backtrack
+    print( 'recover backtrack', file=sys.stderr ) #debug
+    for line in backtrack:
+        print( line, file=sys.stderr ) #debug
+    backtrack = []
+
+
 with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
      csvreader = csv.reader( inf )
 
@@ -405,8 +414,7 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
          m = person_marker.match( content )
          if m:
             if backtrack:
-               print( 'recover backtrack', file=sys.stderr ) #debug
-               backtrack = []
+               broken_recovery()
             # 123. name-part detail-part
             in_children = False
             person_n = m.group(1).strip()
@@ -432,8 +440,7 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
             m = child_marker.match( content )
             if m:
                if backtrack:
-                  print( 'recover backtrack', file=sys.stderr ) #debug
-                  backtrack = []
+                  broken_recovery()
                # +123 vii. name-part detail-part
                # or
                # 123 vii. name-part detail-part
