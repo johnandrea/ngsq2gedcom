@@ -13,6 +13,7 @@ At this early stage, read the code for a list of assumptions and conversion note
 - parent name rows begin with "number period space"
 - child name rows begin with "optional-plus number spave roman-numeral-birth-order optional-period space"
 - the surname (SURN) will be the last word part of each name. Might not always be correct.
+- OCR broken lines occur only in the child name lines.
 
 ## Notes on variants:
 - the document in hand has "b. DATE" after a person's name
