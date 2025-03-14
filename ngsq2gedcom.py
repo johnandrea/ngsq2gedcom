@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.4.2
+v0.5.0
 """
 
 import sys
@@ -127,6 +127,8 @@ name_limit = 110
 # ix. NAME12 b. Abt 1927.
 # X. NAME13, b. Abt 1933 in
 # Oh, this is a mess. Maybe detect the problem and fail with message.
+backtrack = []
+
 #bare_parent_number = re.compile( '^(\\d+)\\.$' )
 broken_lines = []
 broken_lines.append([ 'bare_child_plus', re.compile( '^(\\+)$') ])
@@ -402,6 +404,9 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
 
          m = person_marker.match( content )
          if m:
+            if backtrack:
+               print( 'recover backtrack', file=sys.stderr ) #debug
+               backtrack = []
             # 123. name-part detail-part
             in_children = False
             person_n = m.group(1).strip()
@@ -426,6 +431,9 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
             #print( 'in children', file=sys.stderr ) #debug
             m = child_marker.match( content )
             if m:
+               if backtrack:
+                  print( 'recover backtrack', file=sys.stderr ) #debug
+                  backtrack = []
                # +123 vii. name-part detail-part
                # or
                # 123 vii. name-part detail-part
@@ -445,14 +453,19 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
             if content.endswith( ' Children:' ):
                in_children = True
 
-         found_broken = False
+         broken_reason = ''
          for check_broken in broken_lines:
              m = check_broken[1].match( content )
              if m:
-                print( 'WARN broken line/' + check_broken[0], '/', content, file=sys.stderr )
-                found_broken = True
-         if not found_broken and first_person is not None:
-            people[current_person]['lines'].append( content )
+                broken_reason = check_broken[0]
+                print( 'WARN broken line/', broken_reason, '/', content, file=sys.stderr ) #debug
+         if broken_reason:
+            backtrack.append( [broken_reason, content] )
+         else:
+            # otherwise: attach to the the current person,
+            # but skip the header section until the first person is found
+            if first_person is not None:
+               people[current_person]['lines'].append( content )
          #print( unmark, content, file=sys.stderr )
 
 if first_person is None:
