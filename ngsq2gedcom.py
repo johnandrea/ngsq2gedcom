@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.5.2
+v0.5.4
 """
 
 import sys
@@ -131,11 +131,13 @@ backtrack = []
 
 #bare_parent_number = re.compile( '^(\\d+)\\.$' )
 broken_lines = []
-broken_lines.append([ 'bare_child_plus', re.compile( '^(\\+)$') ])
-broken_lines.append([ 'bare_child_number', re.compile( '^(\\d+)$') ])
-broken_lines.append([ 'bare_child_plusnumber', re.compile( '^(\\+ ?\\d+)$' ) ])
-broken_lines.append([ 'bare_child_roman', re.compile( '^([i|I|v|V|x|X]+)\\.$' ) ])
-broken_lines.append([ 'child_line_without_number', re.compile( '^([i|I|v|V|x|X]+\\. ?...*)$' ) ])
+broken_lines.append([ 'bare child plus', re.compile( '^(\\+)$') ])
+broken_lines.append([ 'bare child number', re.compile( '^(\\d+)$') ])
+broken_lines.append([ 'bare child plus and number', re.compile( '^(\\+ ?\\d+)$' ) ])
+broken_lines.append([ 'bare child roman', re.compile( '^([i|I|v|V|x|X]+)\\.$' ) ])
+broken_lines.append([ 'bare child number and roman', re.compile( '^(\\d+) ([i|I|v|V|x|X]+)\\.$' ) ])
+broken_lines.append([ 'bare child plus and number and roman', re.compile( '^\\+ ?(\\d+) ([i|I|v|V|x|X]+)\\.$' ) ])
+broken_lines.append([ 'bare child roman and name', re.compile( '^([i|I|v|V|x|X]+\\. ?...*)$' ) ])
 
 # common names to help determine sex
 # note, all lowercase
@@ -378,6 +380,53 @@ def broken_recovery():
     for line in backtrack:
         print( line, file=sys.stderr ) #debug
 
+    # possible broken
+    # 1/ bare child plus/                      +        -> 2, 4, 9
+    # 2/ bare child number/                    nn       -> 6, 7
+    # 3/ bare child plus and number/           +nn      -> 6, 7
+    # 4/ bare child number and roman/          nn xvi.  -> 8
+    # 5/ bare child plus and number and roman/ +nn xvi. -> 8
+    # 6/ bare child romam/                     xvi.     -> 8
+    # 7/ bare child roman and name/            xvi. name-> done
+    # 8/ regular line/                         name...      -> done
+    # 9/ complete line/  nn xvi. name -- might also need a leading plus
+    #  / complete line/ +nn xvi. name
+
+    fixed_line = ''
+    for index, line in enumerate(backtrack):
+        name = line['name']
+        if name:
+           # turn off this line
+           backtrack[index]['name'] = ''
+           # grab this
+           fixed_line += ' ' + line['value']
+
+           find_next = ['child line without number']
+
+           if name == 'bare child plus': #1
+              find_next = ['bare child number', 'bare child number and roman']
+
+           elif name in ['bare child number', 'bare child plus and number']: #2, 3
+              find_next = ['bare child roman', 'bare child roman and name']
+
+           elif name in ['bare child number and roman', 'bare child number and roman']: #4, 5
+              find_next = ['regular line']
+
+           elif name == 'bare child roman': #6
+              find_next = ['regular line']
+
+           found_matchup = False
+           for next_index, next_line in enumerate(backtrack):
+               next_name = next_line['name']
+               if next_name in find_next:
+                  found_matchup = True
+                  # turn this one off
+                  backtrack[next_index]['name'] = ''
+                  print( 'matched up/', line['value'], '/with/', next_line['value'], file=sys.stderr ) #debug
+                  break
+           if not found_matchup:
+              print( 'didnt match/', line['value'], '/index', index, file=sys.stderr ) #debug
+
     # all done, erase the saved line
     backtrack = []
 
@@ -471,7 +520,7 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
                 broken_reason = check_broken[0]
                 #print( 'WARN broken line/', broken_reason, '/', content, file=sys.stderr ) #debug
          if broken_reason:
-            backtrack.append( [broken_reason, content] )
+            backtrack.append( {'name':broken_reason, 'value':content} )
          else:
             # otherwise: attach to the the current person,
             # but skip the header section until the first person is found
