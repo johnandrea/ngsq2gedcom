@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.4.1
+v0.4.2
 """
 
 import sys
@@ -122,11 +122,18 @@ name_limit = 110
 # 11
 # vii. NAME10.
 # + 12
-# viii. NAME11, b. 17 Jul 
+# viii. NAME11, b. 17 Jul
 # 13
 # ix. NAME12 b. Abt 1927.
 # X. NAME13, b. Abt 1933 in
 # Oh, this is a mess. Maybe detect the problem and fail with message.
+#bare_parent_number = re.compile( '^(\\d+)\\.$' )
+broken_lines = []
+broken_lines.append([ 'bare_child_plus', re.compile( '^(\\+)$') ])
+broken_lines.append([ 'bare_child_number', re.compile( '^(\\d+)$') ])
+broken_lines.append([ 'bare_child_plusnumber', re.compile( '^(\\+ ?\\d+)$' ) ])
+broken_lines.append([ 'bare_child_roman', re.compile( '^([i|I|v|V|x|X]+)\\.$' ) ])
+broken_lines.append([ 'child_line_without_number', re.compile( '^([i|I|v|V|x|X]+\\. ?...*)$' ) ])
 
 # common names to help determine sex
 # note, all lowercase
@@ -438,7 +445,13 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
             if content.endswith( ' Children:' ):
                in_children = True
 
-         if first_person is not None:
+         found_broken = False
+         for check_broken in broken_lines:
+             m = check_broken[1].match( content )
+             if m:
+                print( 'WARN broken line/' + check_broken[0], '/', content, file=sys.stderr )
+                found_broken = True
+         if not found_broken and first_person is not None:
             people[current_person]['lines'].append( content )
          #print( unmark, content, file=sys.stderr )
 
