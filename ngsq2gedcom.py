@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.5.4
+v0.5.6
 """
 
 import sys
@@ -386,11 +386,29 @@ def broken_recovery():
     # 3/ bare child plus and number/           +nn      -> 6, 7
     # 4/ bare child number and roman/          nn xvi.  -> 8
     # 5/ bare child plus and number and roman/ +nn xvi. -> 8
-    # 6/ bare child romam/                     xvi.     -> 8
+    # 6/ bare child roman/                     xvi.     -> 8
     # 7/ bare child roman and name/            xvi. name-> done
     # 8/ regular line/                         name...      -> done
     # 9/ complete line/  nn xvi. name -- might also need a leading plus
     #  / complete line/ +nn xvi. name
+
+    next_matches = dict()
+    #1
+    next_matches['bare child plus'] = ['bare child number',
+                                       'bare child number and roman']
+    #2, 3
+    next_matches['bare child number'] = ['bare child roman',
+                                         'bare child roman and name']
+    next_matches['bare child plus and number'] = next_matches['bare child number']
+    # 4, 5
+    next_matches['bare child number and roman'] = ['regular line']
+    next_matches['bare child plus number and roman'] = ['regular line']
+    # 6
+    next_matches['bare child roman'] = ['regular line']
+    # 7
+    next_matches['bare child roman and name'] = ['regular line']
+    # 8
+    next_matches['regular line'] = ['done']
 
     fixed_line = ''
     for index, line in enumerate(backtrack):
@@ -398,36 +416,30 @@ def broken_recovery():
         if name:
            # turn off this line
            backtrack[index]['name'] = ''
-           # grab this
-           fixed_line += ' ' + line['value']
-
-           find_next = ['child line without number']
-
-           if name == 'bare child plus': #1
-              find_next = ['bare child number', 'bare child number and roman']
-
-           elif name in ['bare child number', 'bare child plus and number']: #2, 3
-              find_next = ['bare child roman', 'bare child roman and name']
-
-           elif name in ['bare child number and roman', 'bare child number and roman']: #4, 5
-              find_next = ['regular line']
-
-           elif name == 'bare child roman': #6
-              find_next = ['regular line']
+           # collect this content
+           fixed_line = line['value']
+           # what to look for next
+           find_next = next_matches[name]
 
            found_matchup = False
-           for next_index, next_line in enumerate(backtrack):
-               next_name = next_line['name']
-               if next_name in find_next:
-                  found_matchup = True
-                  # turn this one off
-                  backtrack[next_index]['name'] = ''
-                  print( 'matched up/', line['value'], '/with/', next_line['value'], file=sys.stderr ) #debug
-                  break
-           if not found_matchup:
-              print( 'didnt match/', line['value'], '/index', index, file=sys.stderr ) #debug
+           found_end = False
+           while not found_end:
+               for next_index, next_line in enumerate(backtrack):
+                   next_name = next_line['name']
+                   if next_name in find_next:
+                      print( 'matched up/', line['value'], '/with/', next_line['value'], file=sys.stderr ) #debug
+                      found_matchup = True
+                      # collect this content
+                      fixed_line += ' ' + next_line['value']
+                      # unusable now that its been collected
+                      backtrack[next_index]['value'] = ''
+                      # next part to search for
+                      find_next = next_matches[next_name]
+                      break
+               if not found_matchup:
+                  print( 'didnt match/', line['value'], '/index', index, file=sys.stderr ) #debug
 
-    # all done, erase the saved line
+    # all done, erase the saved lines
     backtrack = []
 
 
