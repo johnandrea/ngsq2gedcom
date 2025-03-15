@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.5.8
+v0.5.9
 """
 
 import sys
@@ -444,6 +444,9 @@ def broken_recovery():
                       break
                if not found_matchup:
                   print( 'didnt match/', line['value'], '/index', index, file=sys.stderr ) #debug
+
+               print( 'EXITING for debug', file=sys.stderr ) #debug
+               sys.exit() #debug
 
     # all done, erase the saved lines
     backtrack = []
