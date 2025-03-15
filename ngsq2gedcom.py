@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.5.10
+v0.6.1
 """
 
 import sys
@@ -127,6 +127,7 @@ name_limit = 110
 # ix. NAME12 b. Abt 1927.
 # X. NAME13, b. Abt 1933 in
 # Oh, this is a mess. Maybe detect the problem and fail with message.
+# Handle these cases and ignore the one where a break is after the roman numerals.
 backtrack = []
 
 #bare_parent_number = re.compile( '^(\\d+)\\.$' )
@@ -134,13 +135,9 @@ broken_lines = []
 broken_lines.append([ 'bare child plus', re.compile( '^(\\+)$') ])
 broken_lines.append([ 'bare child number', re.compile( '^(\\d+)$') ])
 broken_lines.append([ 'bare child plus and number', re.compile( '^(\\+ ?\\d+)$' ) ])
-broken_lines.append([ 'bare child roman', re.compile( '^([i|I|v|V|x|X]+)\\.$' ) ])
-broken_lines.append([ 'bare child number and roman', re.compile( '^(\\d+) ([i|I|v|V|x|X]+)\\.$' ) ])
-broken_lines.append([ 'bare child plus and number and roman', re.compile( '^\\+ ?(\\d+) ([i|I|v|V|x|X]+)\\.$' ) ])
 broken_lines.append([ 'bare child roman and name', re.compile( '^([i|I|v|V|x|X]+\\. ?...*)$' ) ])
 
-# name of a backtracked line which and endpoint
-backtrack_regular = 'regular line'
+# name of a backtracked line to stop looking
 backtrack_end = 'done'
 
 # common names to help determine sex
@@ -380,39 +377,27 @@ def broken_recovery():
     global backtrack
     global people
 
-    print( 'recover backtrack', file=sys.stderr ) #debug
+    print( 'recover backtrack: show all lines', file=sys.stderr ) #debug
     for line in backtrack:
         print( line, file=sys.stderr ) #debug
 
-    # possible broken
-    # 1/ bare child plus/                      +        -> 2, 4, 9
-    # 2/ bare child number/                    nn       -> 6, 7
-    # 3/ bare child plus and number/           +nn      -> 6, 7
-    # 4/ bare child number and roman/          nn xvi.  -> 8
-    # 5/ bare child plus and number and roman/ +nn xvi. -> 8
-    # 6/ bare child roman/                     xvi.     -> 8
-    # 7/ bare child roman and name/            xvi. name-> done
-    # 8/ regular line/                         name...      -> done
-    # 9/ complete line/  nn xvi. name -- might also need a leading plus
-    #  / complete line/ +nn xvi. name
+    # broken being handled
+    # ignoring when a break is after a roman number
+    # 1/ bare child plus/            +        -> 2
+    # 2/ bare child number/          nn       -> 4
+    # 3/ bare child plus and number/ +nn      -> 4
+    # 4/ bare child roman and name/  xvi. name-> done
 
+    print( 'recover backtrack: actions', file=sys.stderr ) #debug
     next_matches = dict()
     #1
-    next_matches['bare child plus'] = ['bare child number',
-                                       'bare child number and roman']
-    #2, 3
-    next_matches['bare child number'] = ['bare child roman',
-                                         'bare child roman and name']
-    next_matches['bare child plus and number'] = next_matches['bare child number']
-    # 4, 5
-    next_matches['bare child number and roman'] = [backtrack_regular]
-    next_matches['bare child plus number and roman'] = [backtrack_regular]
-    # 6
-    next_matches['bare child roman'] = [backtrack_regular]
-    # 7
-    next_matches['bare child roman and name'] = [backtrack_regular]
-    # 8
-    next_matches[backtrack_regular] = [backtrack_end]
+    next_matches['bare child plus'] = ['bare child number']
+    #2
+    next_matches['bare child number'] = ['bare child roman and name']
+    #3
+    next_matches['bare child plus and number'] = ['bare child roman and name']
+    #4
+    next_matches['bare child roman and name'] = [backtrack_end]
 
     fixed_line = ''
     for index, line in enumerate(backtrack):
