@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.5.7
+v0.5.8
 """
 
 import sys
@@ -439,6 +439,8 @@ def broken_recovery():
                       backtrack[next_index]['value'] = ''
                       # next part to search for
                       find_next = next_matches[next_name]
+                      print( 'recovered/', fixed_line, file=sys.stderr ) #debug
+                      print( 'looking for/', find_next, file=sys.stderr ) #debug
                       break
                if not found_matchup:
                   print( 'didnt match/', line['value'], '/index', index, file=sys.stderr ) #debug
@@ -534,7 +536,7 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
              m = check_broken[1].match( content )
              if m:
                 broken_reason = check_broken[0]
-                #print( 'WARN broken line/', broken_reason, '/', content, file=sys.stderr ) #debug
+                print( 'WARN broken line/', broken_reason, '/', content, file=sys.stderr ) #debug
          if broken_reason:
             backtrack.append( {'name':broken_reason, 'value':content} )
          else:
@@ -542,7 +544,7 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
             # but skip the header section until the first person is found
             if first_person is not None:
                people[current_person]['lines'].append( content )
-         #print( unmark, content, file=sys.stderr )
+               print( 'attach to person/', current_person, '/', content, file=sys.stderr )
 
 if first_person is None:
    print( 'problem: no one detected', file=sys.stderr )
