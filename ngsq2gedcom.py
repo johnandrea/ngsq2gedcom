@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.5.6
+v0.5.7
 """
 
 import sys
@@ -138,6 +138,10 @@ broken_lines.append([ 'bare child roman', re.compile( '^([i|I|v|V|x|X]+)\\.$' ) 
 broken_lines.append([ 'bare child number and roman', re.compile( '^(\\d+) ([i|I|v|V|x|X]+)\\.$' ) ])
 broken_lines.append([ 'bare child plus and number and roman', re.compile( '^\\+ ?(\\d+) ([i|I|v|V|x|X]+)\\.$' ) ])
 broken_lines.append([ 'bare child roman and name', re.compile( '^([i|I|v|V|x|X]+\\. ?...*)$' ) ])
+
+# name of a backtracked line which and endpoint
+backtrack_regular = 'regular line'
+backtrack_end = 'done'
 
 # common names to help determine sex
 # note, all lowercase
@@ -401,14 +405,14 @@ def broken_recovery():
                                          'bare child roman and name']
     next_matches['bare child plus and number'] = next_matches['bare child number']
     # 4, 5
-    next_matches['bare child number and roman'] = ['regular line']
-    next_matches['bare child plus number and roman'] = ['regular line']
+    next_matches['bare child number and roman'] = [backtrack_regular]
+    next_matches['bare child plus number and roman'] = [backtrack_regular]
     # 6
-    next_matches['bare child roman'] = ['regular line']
+    next_matches['bare child roman'] = [backtrack_regular]
     # 7
-    next_matches['bare child roman and name'] = ['regular line']
+    next_matches['bare child roman and name'] = [backtrack_regular]
     # 8
-    next_matches['regular line'] = ['done']
+    next_matches[backtrack_regular] = [backtrack_end]
 
     fixed_line = ''
     for index, line in enumerate(backtrack):
