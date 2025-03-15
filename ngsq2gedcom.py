@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.6.1
+v0.6.2
 """
 
 import sys
@@ -377,6 +377,7 @@ def broken_recovery():
     global backtrack
     global people
 
+    print( '', file=sys.stderr ) #debug
     print( 'recover backtrack: show all lines', file=sys.stderr ) #debug
     for line in backtrack:
         print( line, file=sys.stderr ) #debug
@@ -388,7 +389,7 @@ def broken_recovery():
     # 3/ bare child plus and number/ +nn      -> 4
     # 4/ bare child roman and name/  xvi. name-> done
 
-    print( 'recover backtrack: actions', file=sys.stderr ) #debug
+    #print( 'recover backtrack: actions', file=sys.stderr ) #debug
     next_matches = dict()
     #1
     next_matches['bare child plus'] = ['bare child number']
@@ -412,26 +413,31 @@ def broken_recovery():
 
            found_matchup = False
            found_end = False
-           while not found_end:
+           early_exit = False
+           while not found_end and not early_exit:
                for next_index, next_line in enumerate(backtrack):
                    next_name = next_line['name']
                    if next_name in find_next:
-                      print( 'matched up/', line['value'], '/with/', next_line['value'], file=sys.stderr ) #debug
+                      #print( 'matched up/', line['value'], '/with/', next_line['value'], file=sys.stderr ) #debug
                       found_matchup = True
                       # collect this content
                       fixed_line += ' ' + next_line['value']
                       # unusable now that its been collected
-                      backtrack[next_index]['value'] = ''
+                      backtrack[next_index]['name'] = ''
                       # next part to search for
                       find_next = next_matches[next_name]
-                      print( 'recovered/', fixed_line, file=sys.stderr ) #debug
-                      print( 'looking for/', find_next, file=sys.stderr ) #debug
+                      #print( 'recovered/', fixed_line, file=sys.stderr ) #debug
+                      #print( 'looking for/', find_next, file=sys.stderr ) #debug
+                      if backtrack_end in find_next:
+                         found_end = True
                       break
                if not found_matchup:
+                  early_exit = True
                   print( 'didnt match/', line['value'], '/index', index, file=sys.stderr ) #debug
 
-               print( 'EXITING for debug', file=sys.stderr ) #debug
-               sys.exit() #debug
+           print( 'recovered/', fixed_line, file=sys.stderr ) #debug
+               #print( 'EXITING for debug', file=sys.stderr ) #debug
+               #sys.exit() #debug
 
     # all done, erase the saved lines
     backtrack = []
@@ -524,7 +530,7 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
              m = check_broken[1].match( content )
              if m:
                 broken_reason = check_broken[0]
-                print( 'WARN broken line/', broken_reason, '/', content, file=sys.stderr ) #debug
+                #print( 'WARN broken line/', broken_reason, '/', content, file=sys.stderr ) #debug
          if broken_reason:
             backtrack.append( {'name':broken_reason, 'value':content} )
          else:
