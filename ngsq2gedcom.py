@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.5.9
+v0.5.10
 """
 
 import sys
