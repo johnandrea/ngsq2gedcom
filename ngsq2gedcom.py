@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.7.3
+v0.7.4
 """
 
 import sys
@@ -33,10 +33,6 @@ import csv
 
 # name of the file produced by the suggested ocr process
 in_filename = 'layout.csv'
-
-## marker for debug info
-#mark = ''
-#unmark = '>>'
 
 # mark of a new person (but not inside child block)
 # ^ digits dot
@@ -421,7 +417,6 @@ with open( in_full_file, encoding="utf-8" ) as inf:
             continue
 
          if content == 'Children:':
-            #print( mark, 'in chidren', file=sys.stderr )
             in_children = True
             continue
 
@@ -449,7 +444,6 @@ with open( in_full_file, encoding="utf-8" ) as inf:
             continue
 
          if in_children:
-            #print( 'in children', file=sys.stderr ) #debug
             m = child_marker.match( content )
             if m:
                # +123 vii. name-part detail-part
