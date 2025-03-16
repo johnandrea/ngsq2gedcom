@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.7.2
+v0.7.3
 """
 
 import sys
@@ -31,6 +31,8 @@ import csv
 # This particular version parses a document whic has "#numbers" following
 # the name (most of them) which becomes a REFN tag.
 
+# name of the file produced by the suggested ocr process
+in_filename = 'layout.csv'
 
 ## marker for debug info
 #mark = ''
@@ -371,10 +373,23 @@ def process_people():
         people[p]['name'] = people[p]['givn'] + ' /' + people[p]['surn'] + '/'
 
 
-# need to have the name of the file for an error message
-in_file = sys.argv[1] + os.path.sep + 'layout.csv'
+if len( sys.argv ) < 2:
+   print( 'ERROR: program expects location of input as parameter.', file=sys.stderr )
+   print( 'Named location should contain a file named:', in_filename, file=sys.stderr )
+   sys.exit()
 
-with open( in_file, encoding="utf-8" ) as inf:
+if not os.path.isdir( sys.argv[1] ):
+   print( 'ERROR: input location not found:', sys.argv[1], file=sys.stderr )
+   sys.exit()
+
+# need to have the name of the file for an error message
+in_full_file = sys.argv[1] + os.path.sep + in_filename
+
+if not os.path.isfile( in_full_file ):
+   print( 'ERROR: input file not found:', in_full_file, file=sys.stderr )
+   sys.exit()
+
+with open( in_full_file, encoding="utf-8" ) as inf:
      csvreader = csv.reader( inf )
 
      # first line
@@ -464,7 +479,7 @@ with open( in_file, encoding="utf-8" ) as inf:
                 print( 'broken line/', broken_reason, '/', content, file=sys.stderr )
                 print( 'at csv line', n, file=sys.stderr )
                 print( 'That needs to be fixed in the input file by hand:', file=sys.stderr )
-                print( in_file, file=sys.stderr )
+                print( in_full_file, file=sys.stderr )
                 print( 'Compare with the original PDF', file=sys.stderr )
                 print( 'Previous parent line is:', file=sys.stderr )
                 print( parent_line, file=sys.stderr )
