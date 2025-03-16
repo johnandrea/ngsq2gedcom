@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.7.0
+v0.7.2
 """
 
 import sys
@@ -460,13 +460,17 @@ with open( in_file, encoding="utf-8" ) as inf:
              m = check_broken[1].match( content )
              if m:
                 broken_reason = check_broken[0]
-                print( 'WARN broken line/', broken_reason, '/', content, file=sys.stderr )
+                print( 'ERROR', file=sys.stderr )
+                print( 'broken line/', broken_reason, '/', content, file=sys.stderr )
                 print( 'at csv line', n, file=sys.stderr )
                 print( 'That needs to be fixed in the input file by hand:', file=sys.stderr )
                 print( in_file, file=sys.stderr )
                 print( 'Compare with the original PDF', file=sys.stderr )
                 print( 'Previous parent line is:', file=sys.stderr )
                 print( parent_line, file=sys.stderr )
+                print( '', file=sys.stderr )
+                print( 'Then try again', file=sys.stderr )
+                print( 'PS. Keep a backup of the unedited file.', file=sys.stderr )
                 print( '', file=sys.stderr )
                 print( 'Exiting', file=sys.stderr )
                 sys.exit()
