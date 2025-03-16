@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.6.2
+v0.7.0
 """
 
 import sys
@@ -103,6 +103,9 @@ current_parent = None
 # to match lines to person
 current_person = None
 
+# beginning of a parent
+parent_line = ''
+
 # the data
 # this will be global
 people = dict()
@@ -126,9 +129,7 @@ name_limit = 110
 # 13
 # ix. NAME12 b. Abt 1927.
 # X. NAME13, b. Abt 1933 in
-# Oh, this is a mess. Maybe detect the problem and fail with message.
-# Handle these cases and ignore the one where a break is after the roman numerals.
-backtrack = []
+# Oh, this is a mess. Detect the problem and fail with message.
 
 #bare_parent_number = re.compile( '^(\\d+)\\.$' )
 broken_lines = []
@@ -136,9 +137,6 @@ broken_lines.append([ 'bare child plus', re.compile( '^(\\+)$') ])
 broken_lines.append([ 'bare child number', re.compile( '^(\\d+)$') ])
 broken_lines.append([ 'bare child plus and number', re.compile( '^(\\+ ?\\d+)$' ) ])
 broken_lines.append([ 'bare child roman and name', re.compile( '^([i|I|v|V|x|X]+\\. ?...*)$' ) ])
-
-# name of a backtracked line to stop looking
-backtrack_end = 'done'
 
 # common names to help determine sex
 # note, all lowercase
@@ -373,77 +371,10 @@ def process_people():
         people[p]['name'] = people[p]['givn'] + ' /' + people[p]['surn'] + '/'
 
 
-def broken_recovery():
-    global backtrack
-    global people
+# need to have the name of the file for an error message
+in_file = sys.argv[1] + os.path.sep + 'layout.csv'
 
-    print( '', file=sys.stderr ) #debug
-    print( 'recover backtrack: show all lines', file=sys.stderr ) #debug
-    for line in backtrack:
-        print( line, file=sys.stderr ) #debug
-
-    # broken being handled
-    # ignoring when a break is after a roman number
-    # 1/ bare child plus/            +        -> 2
-    # 2/ bare child number/          nn       -> 4
-    # 3/ bare child plus and number/ +nn      -> 4
-    # 4/ bare child roman and name/  xvi. name-> done
-
-    #print( 'recover backtrack: actions', file=sys.stderr ) #debug
-    next_matches = dict()
-    #1
-    next_matches['bare child plus'] = ['bare child number']
-    #2
-    next_matches['bare child number'] = ['bare child roman and name']
-    #3
-    next_matches['bare child plus and number'] = ['bare child roman and name']
-    #4
-    next_matches['bare child roman and name'] = [backtrack_end]
-
-    fixed_line = ''
-    for index, line in enumerate(backtrack):
-        name = line['name']
-        if name:
-           # turn off this line
-           backtrack[index]['name'] = ''
-           # collect this content
-           fixed_line = line['value']
-           # what to look for next
-           find_next = next_matches[name]
-
-           found_matchup = False
-           found_end = False
-           early_exit = False
-           while not found_end and not early_exit:
-               for next_index, next_line in enumerate(backtrack):
-                   next_name = next_line['name']
-                   if next_name in find_next:
-                      #print( 'matched up/', line['value'], '/with/', next_line['value'], file=sys.stderr ) #debug
-                      found_matchup = True
-                      # collect this content
-                      fixed_line += ' ' + next_line['value']
-                      # unusable now that its been collected
-                      backtrack[next_index]['name'] = ''
-                      # next part to search for
-                      find_next = next_matches[next_name]
-                      #print( 'recovered/', fixed_line, file=sys.stderr ) #debug
-                      #print( 'looking for/', find_next, file=sys.stderr ) #debug
-                      if backtrack_end in find_next:
-                         found_end = True
-                      break
-               if not found_matchup:
-                  early_exit = True
-                  print( 'didnt match/', line['value'], '/index', index, file=sys.stderr ) #debug
-
-           print( 'recovered/', fixed_line, file=sys.stderr ) #debug
-               #print( 'EXITING for debug', file=sys.stderr ) #debug
-               #sys.exit() #debug
-
-    # all done, erase the saved lines
-    backtrack = []
-
-
-with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
+with open( in_file, encoding="utf-8" ) as inf:
      csvreader = csv.reader( inf )
 
      # first line
@@ -454,7 +385,10 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
          col_names[f.lower()] = n
          n += 1
 
+     # this time count lines
+     n = 1
      for row in csvreader:
+         n += 1
          data = unquote_row( row )
          layout = data[col_names['layout']].lower()
          if layout.startswith( 'title' ):
@@ -478,9 +412,8 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
 
          m = person_marker.match( content )
          if m:
-            if backtrack:
-               broken_recovery()
             # 123. name-part detail-part
+            parent_line = content
             in_children = False
             person_n = m.group(1).strip()
             remainder = m.group(2).strip()
@@ -504,8 +437,6 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
             #print( 'in children', file=sys.stderr ) #debug
             m = child_marker.match( content )
             if m:
-               if backtrack:
-                  broken_recovery()
                # +123 vii. name-part detail-part
                # or
                # 123 vii. name-part detail-part
@@ -525,20 +456,26 @@ with open( sys.argv[1] + os.path.sep + 'layout.csv', encoding="utf-8" ) as inf:
             if content.endswith( ' Children:' ):
                in_children = True
 
-         broken_reason = ''
          for check_broken in broken_lines:
              m = check_broken[1].match( content )
              if m:
                 broken_reason = check_broken[0]
-                #print( 'WARN broken line/', broken_reason, '/', content, file=sys.stderr ) #debug
-         if broken_reason:
-            backtrack.append( {'name':broken_reason, 'value':content} )
-         else:
-            # otherwise: attach to the the current person,
-            # but skip the header section until the first person is found
-            if first_person is not None:
-               people[current_person]['lines'].append( content )
-               print( 'attach to person/', current_person, '/', content, file=sys.stderr )
+                print( 'WARN broken line/', broken_reason, '/', content, file=sys.stderr )
+                print( 'at csv line', n, file=sys.stderr )
+                print( 'That needs to be fixed in the input file by hand:', file=sys.stderr )
+                print( in_file, file=sys.stderr )
+                print( 'Compare with the original PDF', file=sys.stderr )
+                print( 'Previous parent line is:', file=sys.stderr )
+                print( parent_line, file=sys.stderr )
+                print( '', file=sys.stderr )
+                print( 'Exiting', file=sys.stderr )
+                sys.exit()
+
+         # otherwise: if haven't exitd above attach to the the current person,
+         # but skip the header section until the first person is found
+         if first_person is not None:
+            people[current_person]['lines'].append( content )
+            #print( 'attach to person/', current_person, '/', content, file=sys.stderr )
 
 if first_person is None:
    print( 'problem: no one detected', file=sys.stderr )
