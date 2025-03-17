@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.7.6
+v0.7.7
 """
 
 import sys
@@ -65,6 +65,7 @@ ross_numbered = re.compile( '([^#]+) #(\\d+)[,|\\.]?(.*)' )
 # 11/ name. town in year...
 # 12/ name. town when father died...
 # 13/ name, b|d. mon year
+# 14/ name. No children...
 # x/ name. town-name...
 
 name_matchers = []
@@ -81,8 +82,9 @@ name_matchers.append( re.compile( '^(.*?)[,|\\.]? (d\\. [A-Z][a-z][a-z] \\d.*)' 
 name_matchers.append( re.compile( '^(.*?)\\. (S?[H|h]e married.*)' ) ) #9
 name_matchers.append( re.compile( '^(.*?)\\. (Single\\..*)' ) ) #10
 name_matchers.append( re.compile( '^(.*?)\\. ([A-Za-z, ]+? in \\d\\d\\d\\d.*)' ) ) #11
-name_matchers.append( re.compile( '^(.*?)\\. ([A-Za-z, ]+? when father died)' ) ) #12
-name_matchers.append( re.compile( '^(.*?)[,|\\.]? ([b|d]\\. [A-Za-z][A-Za-z][A-Za-z] \\d+)' ) ) #13
+name_matchers.append( re.compile( '^(.*?)\\. ([A-Za-z, ]+? when father died.*)' ) ) #12
+name_matchers.append( re.compile( '^(.*?)[,|\\.]? ([b|d]\\. [A-Za-z][A-Za-z][A-Za-z] \\d+.*)' ) ) #13
+name_matchers.append( re.compile( '^(.*?)[,|\\.]? (No children.*)' ) ) #13
 
 # short; as in no detail portion
 name_matchers_short = []
