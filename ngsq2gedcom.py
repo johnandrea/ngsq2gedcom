@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.7.14
+v0.7.15
 """
 
 import sys
@@ -140,15 +140,15 @@ name_limit = 110
 # 13
 # ix. NAME12 b. Abt 1927.
 # X. NAME13, b. Abt 1933 in
-# Worse yet, in some cases the numbers are after the text
+# Worse yet, in some cases the numbers are after the text and out of order
 # 9
 # viii. NAME
 # ix. NAME
 # X. NAME
 # 10
 # xi. NAME
-# 11
 # 12
+# 11
 
 # Oh, this is a mess. Detect the problem and fail with message.
 
@@ -425,12 +425,12 @@ with open( in_full_file, encoding="utf-8" ) as inf:
          n += 1
          data = unquote_row( row )
          layout = data[layout_col].lower()
-         if layout.startswith( 'title' ):
-            continue
+         #if layout.startswith( 'title' ):
+         #   continue
          if layout.startswith( 'page number' ):
             continue
-         if layout.startswith( 'section header' ):
-            continue
+         #if layout.startswith( 'section header' ):
+         #   continue
 
          content = data[text_col]
          if not content:
