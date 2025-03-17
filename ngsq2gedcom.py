@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.7.16
+v0.8.0
 """
 
 import sys
@@ -218,9 +218,6 @@ def unquote_row( row_data ):
 
 
 def extract_name( given ):
-    #print( '', file=sys.stderr ) #debug
-    #print( 'try name/', given, file=sys.stderr ) #debug
-
     name = ''
     after = ''
 
@@ -248,8 +245,6 @@ def extract_name( given ):
        name = given
        after = given
 
-    #print( 'got name/', name, file=sys.stderr ) #debug
-    #print( 'after   /', after, file=sys.stderr ) #debug
     return [ name, after ]
 
 
@@ -376,8 +371,6 @@ def process_people():
         # limit name size
         name_parts = people[p]['name'].replace('Dr. ','').replace('Rev. ','').split()
         # instead - do this on the individual parts
-        #if len( name ) > name_limit:
-        #   people[p]['name'] = name[:name_limit-1]
         given = ' '.join( name_parts[:len(name_parts)-1] )
         surname = name_parts[-1]
         people[p]['givn'] = given[:name_limit-1].strip()
@@ -423,6 +416,11 @@ with open( in_full_file, encoding="utf-8" ) as inf:
      n = 1
      for row in csvreader:
          n += 1
+
+         # skip blank lines:
+         if not row:
+            continue
+
          data = unquote_row( row )
          layout = data[layout_col].lower()
          #if layout.startswith( 'title' ):
@@ -439,9 +437,6 @@ with open( in_full_file, encoding="utf-8" ) as inf:
          if content.startswith( 'Generation ' ):
             continue
 
-         #if 'children' in content.lower(): #debug
-         #   print( 'line', n, content, file=sys.stderr ) #debug
-
          if content == 'Children:':
             in_children = True
             continue
@@ -453,7 +448,6 @@ with open( in_full_file, encoding="utf-8" ) as inf:
             in_children = False
             person_n = m.group(1).strip()
             remainder = m.group(2).strip()
-            #print( 'parent', person_n, content, file=sys.stderr ) #debug
             # check for ocr mistake at the end of any line in a parent
             if content.endswith( ' Children:' ):
                in_children = True
@@ -480,7 +474,6 @@ with open( in_full_file, encoding="utf-8" ) as inf:
                # 123 vii. name-part detail-part
                person_n = m.group(2).strip()
                remainder = m.group(3).strip()
-               #print( 'child', person_n, content, file=sys.stderr ) #debug
                # this child might become a parent later
                people[person_n] = start_child( person_n, remainder )
                current_person = person_n
@@ -520,7 +513,6 @@ with open( in_full_file, encoding="utf-8" ) as inf:
          # but skip the header section until the first person is found
          if first_person is not None:
             people[current_person]['lines'].append( content )
-            #print( 'attach to person/', current_person, '/', content, file=sys.stderr )
 
 if first_person is None:
    print( 'problem: no one detected', file=sys.stderr )
