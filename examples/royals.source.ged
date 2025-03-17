@@ -1,0 +1,523 @@
+﻿0 HEAD
+1 SOUR RootsMagic
+2 NAME RootsMagic
+2 CORP RootsMagic, Inc.
+3 ADDR PO Box 495
+4 CONT Springville, UT 84663
+4 CONT USA
+3 PHON 1-800-ROOTSMAGIC
+3 WWW www.RootsMagic.com
+1 DEST RootsMagic
+1 GEDC
+2 VERS 5.5.1
+2 FORM LINEAGE-LINKED
+1 CHAR UTF-8
+0 @I3@ INDI
+1 NAME Elizabeth_II Alexandra Mary /Windsor/
+2 GIVN Elizabeth_II Alexandra Mary
+2 SURN Windsor
+2 NSFX Queen of England
+1 SEX F
+1 BIRT
+2 DATE 21 APR 1926
+2 PLAC 17 Bruton St., London, W1, England
+1 DEAT
+2 DATE 8 SEP 2022
+2 PLAC Balmoral Castle, Scotland
+1 FAMS @F3@
+0 @I8@ INDI
+1 NAME Philip /Mountbatten/
+2 GIVN Philip
+2 SURN Mountbatten
+2 NSFX Prince
+1 SEX M
+1 BIRT
+2 DATE 10 JUN 1921
+2 PLAC Isle of Kerkira, Mon Repos, Corfu, Greece
+1 DEAT
+2 DATE 9 APR 2021
+2 PLAC Windsor, England
+1 FAMS @F3@
+0 @I9@ INDI
+1 NAME Charles Philip Arthur /Windsor/
+2 GIVN Charles Philip Arthur
+2 SURN Windsor
+2 NSFX King Charles III
+1 NAME Charles III //
+2 GIVN Charles III
+1 SEX M
+1 BIRT
+2 DATE 14 NOV 1948
+2 PLAC Buckingham, Palace, London, England
+1 CHR
+2 DATE 15 DEC 1948
+2 PLAC Buckingham, Palace, Music Room, England
+1 FAMS @F5@
+1 FAMS @F8@
+1 FAMC @F3@
+0 @I10@ INDI
+1 NAME Anne Elizabeth Alice /Windsor/
+2 GIVN Anne Elizabeth Alice
+2 SURN Windsor
+2 NSFX Princess
+1 SEX F
+1 BIRT
+2 DATE 15 AUG 1950
+2 PLAC Clarence House, St. James, England
+1 CHR
+2 DATE 21 OCT 1950
+2 PLAC England
+1 FAMS @F4@
+1 FAMS @F11@
+1 FAMC @F3@
+0 @I11@ INDI
+1 NAME Andrew Albert Christian /Windsor/
+2 GIVN Andrew Albert Christian
+2 SURN Windsor
+2 NSFX Duke of York
+1 SEX M
+1 BIRT
+2 DATE 19 FEB 1960
+2 PLAC Belgian Suite, Buckingham, Palace, England
+1 FAMS @F6@
+1 FAMC @F3@
+0 @I12@ INDI
+1 NAME Edward Anthony Richard /Windsor/
+2 GIVN Edward Anthony Richard
+2 SURN Windsor
+2 NSFX Earl of Wessex
+1 SEX M
+1 BIRT
+2 DATE 10 MAR 1964
+2 PLAC Buckingham, Palace, London, England
+1 CHR
+2 DATE 2 MAY 1964
+1 FAMS @F12@
+1 FAMC @F3@
+0 @I13@ INDI
+1 NAME Mark Anthony Peter /Phillips/
+2 GIVN Mark Anthony Peter
+2 SURN Phillips
+2 NSFX Captain
+1 SEX M
+1 BIRT
+2 DATE 22 SEP 1948
+1 FAMS @F4@
+0 @I14@ INDI
+1 NAME Peter Mark Andrew /Phillips/
+2 GIVN Peter Mark Andrew
+2 SURN Phillips
+1 SEX M
+1 BIRT
+2 DATE 15 NOV 1977
+2 PLAC St. Mary's Hosp., Paddington, London, England
+1 CHR
+2 DATE 22 DEC 1977
+2 PLAC Music Room, Buckingham, Palace, England
+1 FAMS @F15@
+1 FAMC @F4@
+0 @I15@ INDI
+1 NAME Zara Anne Elizabeth /Phillips/
+2 GIVN Zara Anne Elizabeth
+2 SURN Phillips
+1 SEX F
+1 BIRT
+2 DATE 15 MAY 1981
+2 PLAC St. Marys Hosp., Paddington, London, England
+1 FAMS @F16@
+1 FAMC @F4@
+0 @I16@ INDI
+1 NAME Diana Frances /Spencer/
+2 GIVN Diana Frances
+2 SURN Spencer
+2 NSFX Princess of Wales
+1 SEX F
+1 BIRT
+2 DATE 1 JUL 1961
+2 PLAC Park House, Sandringham, Norfolk, England
+1 DEAT
+2 DATE 6 SEP 1997
+2 PLAC Paris, France
+1 CHR
+2 PLAC Sandringham, Church, Norfolk, England
+1 FAMS @F5@
+0 @I17@ INDI
+1 NAME William Arthur Philip /Windsor/
+2 GIVN William Arthur Philip
+2 SURN Windsor
+2 NSFX Prince of Wales
+1 SEX M
+1 BIRT
+2 DATE 21 JUN 1982
+2 PLAC St. Mary's Hosp., Paddington, London, England
+1 CHR
+2 DATE 4 AUG 1982
+2 PLAC Music Room, Buckingham, Palace, England
+1 FAMS @F9@
+1 FAMC @F5@
+0 @I18@ INDI
+1 NAME Henry Charles Albert /Windsor/
+2 GIVN Henry Charles Albert
+2 SURN Windsor
+2 NSFX Duke of Sussex
+2 NICK Harry
+1 SEX M
+1 BIRT
+2 DATE 15 SEP 1984
+2 PLAC St. Mary's Hosp., Paddington, London, England
+1 FAMS @F10@
+1 FAMC @F5@
+0 @I19@ INDI
+1 NAME Sarah Margaret /Ferguson/
+2 GIVN Sarah Margaret
+2 SURN Ferguson
+2 NSFX Duchess of York
+1 SEX F
+1 BIRT
+2 DATE 15 OCT 1959
+2 PLAC 27 Welbech St., Marylebone, London, England
+1 FAMS @F6@
+0 @I20@ INDI
+1 NAME Beatrice Elizabeth Mary /Windsor/
+2 GIVN Beatrice Elizabeth Mary
+2 SURN Windsor
+2 NSFX Princess of York
+1 SEX F
+1 BIRT
+2 DATE 8 AUG 1988
+2 PLAC Portland Hosp., England
+1 FAMS @F13@
+1 FAMC @F6@
+0 @I21@ INDI
+1 NAME Eugenie Victoria Helena /Windsor/
+2 GIVN Eugenie Victoria Helena
+2 SURN Windsor
+2 NSFX Princess of York
+1 SEX F
+1 BIRT
+2 DATE 23 MAR 1990
+2 PLAC London, England
+1 CHR
+2 DATE 23 DEC 1990
+2 PLAC Sandringham, England
+1 FAMS @F14@
+1 FAMC @F6@
+0 @I23@ INDI
+1 NAME Camilla Rosemary /Shand/
+2 GIVN Camilla Rosemary
+2 SURN Shand
+1 SEX F
+1 BIRT
+2 DATE 17 JUL 1947
+2 PLAC London, England
+1 FAMS @F8@
+0 @I24@ INDI
+1 NAME Catherine /Middleton/
+2 GIVN Catherine
+2 SURN Middleton
+2 NSFX Princess of Wales
+2 NICK Kate
+1 SEX F
+1 BIRT
+2 DATE 9 JAN 1982
+2 PLAC Reading, England
+1 DEAT Y
+1 FAMS @F9@
+0 @I25@ INDI
+1 NAME George Alexander Louis /Windsor/
+2 GIVN George Alexander Louis
+2 SURN Windsor
+2 NSFX Prince of Wales
+1 SEX M
+1 BIRT
+2 DATE 22 JUL 2013
+2 PLAC London, England
+1 FAMC @F9@
+0 @I26@ INDI
+1 NAME Charlotte Elizabeth Diana /Windsor/
+2 GIVN Charlotte Elizabeth Diana
+2 SURN Windsor
+2 NSFX Princess of Wales
+1 SEX F
+1 BIRT
+2 DATE 2 MAY 2015
+2 PLAC London, England
+1 FAMC @F9@
+0 @I27@ INDI
+1 NAME Louis Arthur Charles /Windsor/
+2 GIVN Louis Arthur Charles
+2 SURN Windsor
+2 NSFX Princes of Wales
+1 SEX M
+1 BIRT
+2 DATE 23 APR 2018
+2 PLAC London, England
+1 FAMC @F9@
+0 @I28@ INDI
+1 NAME Rachel Meghan /Markle/
+2 GIVN Rachel Meghan
+2 SURN Markle
+2 NSFX Duchess of Sussex
+1 SEX F
+1 BIRT
+2 DATE 4 AUG 1981
+2 PLAC Los Angeles, California
+1 FAMS @F10@
+0 @I29@ INDI
+1 NAME Archie Harrison /Windsor/
+2 GIVN Archie Harrison
+2 SURN Windsor
+1 SEX M
+1 BIRT
+2 DATE 6 MAY 2019
+2 PLAC London, England
+1 FAMC @F10@
+0 @I30@ INDI
+1 NAME Lilibet Diana /Windsor/
+2 GIVN Lilibet Diana
+2 SURN Windsor
+1 SEX F
+1 BIRT
+2 DATE 4 JUN 2021
+2 PLAC Santa Barbara, California
+1 FAMC @F10@
+0 @I31@ INDI
+1 NAME Timothy /Laurence/
+2 GIVN Timothy
+2 SURN Laurence
+1 SEX M
+1 BIRT
+2 DATE 1 MAR 1955
+2 PLAC London, England
+1 FAMS @F11@
+0 @I32@ INDI
+1 NAME Sophie Helen /Rhys-Jones/
+2 GIVN Sophie Helen
+2 SURN Rhys-Jones
+2 NSFX Countess of Wessex
+1 SEX F
+1 BIRT
+2 DATE 20 JAN 1965
+2 PLAC Oxford, England
+1 FAMS @F12@
+0 @I33@ INDI
+1 NAME Louise Alice Elizabeth Mary /Windsor/
+2 GIVN Louise Alice Elizabeth Mary
+2 SURN Windsor
+2 NSFX Lady
+1 SEX F
+1 BIRT
+2 DATE 8 NOV 2003
+2 PLAC Surrey, England
+1 FAMC @F12@
+0 @I34@ INDI
+1 NAME James Alexander Philip Theo /Windsor/
+2 GIVN James Alexander Philip Theo
+2 SURN Windsor
+2 NSFX Viscount Severn
+1 SEX M
+1 BIRT
+2 DATE 17 DEC 2007
+2 PLAC Surrey, England
+1 FAMC @F12@
+0 @I35@ INDI
+1 NAME Edoardo /Mapelli Mozzi/
+2 GIVN Edoardo
+2 SURN Mapelli Mozzi
+1 SEX M
+1 BIRT
+2 DATE 1984
+1 FAMS @F13@
+0 @I36@ INDI
+1 NAME Sienna Elizabeth /Mapelli Mozzi/
+2 GIVN Sienna Elizabeth
+2 SURN Mapelli Mozzi
+1 SEX F
+1 BIRT
+2 DATE 2021
+1 FAMC @F13@
+0 @I37@ INDI
+1 NAME Jack /Brooksbank/
+2 GIVN Jack
+2 SURN Brooksbank
+1 SEX M
+1 FAMS @F14@
+0 @I38@ INDI
+1 NAME August Philip Hawke /Brooksbank/
+2 GIVN August Philip Hawke
+2 SURN Brooksbank
+1 SEX M
+1 BIRT
+2 DATE 9 FEB 2021
+1 FAMC @F14@
+0 @I39@ INDI
+1 NAME Autumn /Kelly/
+2 GIVN Autumn
+2 SURN Kelly
+1 SEX F
+1 BIRT
+2 PLAC Canada
+1 FAMS @F15@
+0 @I40@ INDI
+1 NAME Isla /Phillips/
+2 GIVN Isla
+2 SURN Phillips
+1 SEX F
+1 BIRT
+2 DATE 2012
+1 FAMC @F15@
+0 @I41@ INDI
+1 NAME Savannah /Phillips/
+2 GIVN Savannah
+2 SURN Phillips
+1 SEX F
+1 BIRT
+2 DATE 2010
+1 FAMC @F15@
+0 @I42@ INDI
+1 NAME Mike /Tindall/
+2 GIVN Mike
+2 SURN Tindall
+1 SEX M
+1 BIRT
+2 DATE 18 OCT 1978
+1 FAMS @F16@
+0 @I43@ INDI
+1 NAME Mia Grace /Tindall/
+2 GIVN Mia Grace
+2 SURN Tindall
+1 SEX F
+1 BIRT
+2 DATE 2014
+1 FAMC @F16@
+0 @I44@ INDI
+1 NAME Lena Elizabeth /Tindall/
+2 GIVN Lena Elizabeth
+2 SURN Tindall
+1 SEX F
+1 BIRT
+2 DATE 2018
+1 FAMC @F16@
+0 @I45@ INDI
+1 NAME Lucas Philip /Tindall/
+2 GIVN Lucas Philip
+2 SURN Tindall
+1 SEX M
+1 BIRT
+2 DATE 2021
+1 FAMC @F16@
+0 @F3@ FAM
+1 HUSB @I8@
+1 WIFE @I3@
+1 CHIL @I9@
+1 CHIL @I10@
+1 CHIL @I11@
+1 CHIL @I12@
+1 MARR
+2 DATE 20 NOV 1947
+2 PLAC Westminster, Abbey, London, England
+0 @F4@ FAM
+1 HUSB @I13@
+1 WIFE @I10@
+1 CHIL @I14@
+1 CHIL @I15@
+1 MARR
+2 DATE 14 NOV 1973
+2 PLAC Westminster, Abbey, London, England
+1 DIV
+2 DATE 23 APR 1992
+0 @F5@ FAM
+1 HUSB @I9@
+1 WIFE @I16@
+1 CHIL @I17@
+1 CHIL @I18@
+1 MARR
+2 DATE 29 JUL 1981
+2 PLAC St. Paul's, Cathedral, London, England
+1 EVEN
+2 TYPE Separation
+2 DATE DEC 1992
+1 DIV
+2 DATE 28 AUG 1996
+0 @F6@ FAM
+1 HUSB @I11@
+1 WIFE @I19@
+1 CHIL @I20@
+1 CHIL @I21@
+1 MARR
+2 DATE 23 JUL 1986
+2 PLAC Westminster, Abbey, London, England
+1 EVEN
+2 TYPE Separation
+2 DATE 9 MAR 1992
+1 DIV
+2 DATE 30 MAY 1996
+0 @F8@ FAM
+1 HUSB @I9@
+1 WIFE @I23@
+1 ENGA
+2 DATE 10 FEB 2005
+1 MARR
+2 DATE 9 APR 2005
+2 PLAC London, England
+0 @F9@ FAM
+1 HUSB @I17@
+1 WIFE @I24@
+1 CHIL @I25@
+1 CHIL @I26@
+1 CHIL @I27@
+1 MARR
+2 DATE 29 APR 2011
+2 PLAC London, England
+0 @F10@ FAM
+1 HUSB @I18@
+1 WIFE @I28@
+1 CHIL @I29@
+1 CHIL @I30@
+1 MARR
+2 DATE 19 MAY 2018
+2 PLAC London, England
+0 @F11@ FAM
+1 HUSB @I31@
+1 WIFE @I10@
+1 MARR
+2 DATE 12 DEC 1992
+2 PLAC Balmoral, Scotland
+0 @F12@ FAM
+1 HUSB @I12@
+1 WIFE @I32@
+1 CHIL @I33@
+1 CHIL @I34@
+1 MARR
+2 DATE 19 JUN 1999
+2 PLAC London, England
+0 @F13@ FAM
+1 HUSB @I35@
+1 WIFE @I20@
+1 CHIL @I36@
+1 MARR
+2 DATE 2020
+0 @F14@ FAM
+1 HUSB @I37@
+1 WIFE @I21@
+1 CHIL @I38@
+1 MARR
+2 DATE 12 OCT 2018
+0 @F15@ FAM
+1 HUSB @I14@
+1 WIFE @I39@
+1 CHIL @I41@
+1 CHIL @I40@
+1 MARR
+2 DATE 2008
+1 DIV
+2 DATE 2021
+0 @F16@ FAM
+1 HUSB @I42@
+1 WIFE @I15@
+1 CHIL @I43@
+1 CHIL @I44@
+1 CHIL @I45@
+1 MARR
+2 DATE 2011
+0 TRLR
