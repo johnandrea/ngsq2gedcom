@@ -15,6 +15,10 @@ At this early stage, read the code for a list of assumptions and conversion note
 - the surname (SURN) will be the last word part of each name. Might not always be correct.
 - OCR broken lines occur only in the child name lines.
 
+## Corrections
+- Some OCR mistakes are detected, but need to be corected by hand in the input csv file.
+- Some names are not extracted properly and should be corrected after the gedcom is created.
+
 ## Notes on variants:
 - the document in hand has "b. DATE" after a person's name
 - the sample from RMv9 has "was born on DATE"
