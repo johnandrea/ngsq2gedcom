@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.7.7
+v0.7.9
 """
 
 import sys
@@ -34,6 +34,11 @@ import csv
 # name of the file produced by the suggested ocr process
 in_filename = 'layout.csv'
 
+# names of the column in the csv file
+# lowercase
+layout_col = 'layout'
+text_col = 'text'
+
 # mark of a new person (but not inside child block)
 # ^ digits dot
 person_marker = re.compile( '^(\\d+)\\. (.*)' )
@@ -46,7 +51,7 @@ child_marker = re.compile( '^(\\+)? ?(\\d+) [i|I|v|V|x|X]+\\. ?(.*)' )
 # line with name might contain the Ross MacKay id number
 # name-chars # digits comma|dot chars
 # 1/  given middle surname #123, details
-ross_numbered = re.compile( '([^#]+) #(\\d+)[,|\\.]?(.*)' )
+ross_numbered = re.compile( '([^#]+) # ?(\\d+)[,|\\.]?(.*)' )
 
 # more attempt to extract the name
 # in order of checking
@@ -231,7 +236,7 @@ def extract_name( given ):
 
     print( 'got name/', name, file=sys.stderr ) #debug
     #print( 'after   /', after, file=sys.stderr ) #debug
-    return [ name.strip(), after.strip() ]
+    return [ name, after ]
 
 
 def start_child( p, remainder_of_line ):
@@ -269,21 +274,6 @@ def start_child( p, remainder_of_line ):
     results['lines'].append( after_name.strip() )
 
     return results
-
-
-def show_people( indent, p ):
-    print( indent + '>', p, file=sys.stderr )
-    print( indent + people[p]['name'], file=sys.stderr )
-    if not people[p]['name']:
-       print( indent, '!!! no name', file=sys.stderr ) #debug
-    print( indent + 'sex', people[p]['sex'], file=sys.stderr )
-    print( indent + 'rossid', people[p]['rossid'], file=sys.stderr )
-    n = 0
-    for line in people[p]['lines']:
-        n += 1
-        print( indent + 'line', n, line, file=sys.stderr )
-    for child in people[p]['children']:
-        show_people( indent + '   ', child )
 
 
 def gedcom_indi( p ):
@@ -408,12 +398,19 @@ with open( in_full_file, encoding="utf-8" ) as inf:
          col_names[f.lower()] = n
          n += 1
 
+     if not ( layout_col in col_names and text_col in col_names ):
+        print( 'ERROR', file=sys.stderr )
+        print( 'Input file doesnt contain expected column headers', file=sys.stderr )
+        sys.exit()
+     layout_col = col_names[layout_col]
+     text_col = col_names[text_col]
+
      # this time count lines
      n = 1
      for row in csvreader:
          n += 1
          data = unquote_row( row )
-         layout = data[col_names['layout']].lower()
+         layout = data[layout_col].lower()
          if layout.startswith( 'title' ):
             continue
          if layout.startswith( 'page number' ):
@@ -421,7 +418,7 @@ with open( in_full_file, encoding="utf-8" ) as inf:
          if layout.startswith( 'section header' ):
             continue
 
-         content = data[col_names['text']]
+         content = data[text_col]
          if not content:
             continue
             # sometimes not detected as a section header
@@ -506,9 +503,6 @@ if first_person is None:
    print( 'problem: no one detected', file=sys.stderr )
 else:
    process_people()
-   #print( '', file=sys.stderr )
-   #print( 'People', file=sys.stderr )
-   #show_people( '', first_person )
 
    gedcom_header()
    gedcom_indi( first_person )
