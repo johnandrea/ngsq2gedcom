@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.7.9
+v0.7.10
 """
 
 import sys
@@ -429,6 +429,9 @@ with open( in_full_file, encoding="utf-8" ) as inf:
             in_children = True
             continue
 
+         if 'children' in content.lower(): #debug
+            print( 'line', n, content, file=sys.stderr ) #debug
+
          m = person_marker.match( content )
          if m:
             # 123. name-part detail-part
@@ -439,6 +442,9 @@ with open( in_full_file, encoding="utf-8" ) as inf:
             #print( 'parent', person_n, content, file=sys.stderr ) #debug
             # check for ocr mistake at the end of any line in a parent
             if content.endswith( ' Children:' ):
+               in_children = True
+            # also an alternate style
+            if 'Children by ' in content or 'Children with ' in content:
                in_children = True
             if first_person is None:
                first_person = person_n
@@ -471,7 +477,10 @@ with open( in_full_file, encoding="utf-8" ) as inf:
                continue
          else:
             # check for ocr mistake at the end of any line in a parent
-            if content.endswith( ' Children:' ) or content.startswith( 'Children with ' ) or content.startswith( 'Children by ' ):
+            if content.endswith( ' Children:' ):
+               in_children = True
+            # alternate style
+            if 'Children by ' in content or 'Children with ' in content:
                in_children = True
 
          for check_broken in broken_lines:
