@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.7.11
+v0.7.14
 """
 
 import sys
@@ -62,6 +62,8 @@ ross_numbered = re.compile( '([^#]+) # ?(\\d+)[,|\\.]?(.*)' )
 # 5/  first middle surname. b. Abt date...
 # 6/  first middle surname, b. Abt date...
 # 7/  first middle surname b. Abt date...
+# 15/ name, b|d. year
+# 16/ name, b. in PLACE
 # also use died "d. " but check on born first
 # also use "bef date" and "aft date"
 # 8 like 2,3,4 but month with no day
@@ -86,10 +88,12 @@ name_matchers.append( re.compile( '^(.*?)[,|\\.]? (b\\. [A-Z][a-z][a-z] \\d.*)' 
 name_matchers.append( re.compile( '^(.*?)[,|\\.]? (d\\. [A-Z][a-z][a-z] \\d.*)' ) ) #8 died
 name_matchers.append( re.compile( '^(.*?)\\. (S?[H|h]e married.*)' ) ) #9
 name_matchers.append( re.compile( '^(.*?)\\. (Single\\..*)' ) ) #10
-name_matchers.append( re.compile( '^(.*?)\\. ([A-Za-z, ]+? in \\d\\d\\d\\d.*)' ) ) #11
+name_matchers.append( re.compile( '^(.*?)\\. ([A-Za-z, ]+?\\.? in \\d\\d\\d\\d.*)' ) ) #11
 name_matchers.append( re.compile( '^(.*?)\\. ([A-Za-z, ]+? when father died.*)' ) ) #12
 name_matchers.append( re.compile( '^(.*?)[,|\\.]? ([b|d]\\. [A-Za-z][A-Za-z][A-Za-z] \\d+.*)' ) ) #13
-name_matchers.append( re.compile( '^(.*?)[,|\\.]? (No children.*)' ) ) #13
+name_matchers.append( re.compile( '^(.*?)[,|\\.]? (No [C|c]hildren.*)' ) ) #14
+name_matchers.append( re.compile( '^(.*?)[,|\\.]? ([b|d]\\. \\d\\d\\d\\d.*)' ) ) #15
+name_matchers.append( re.compile( '^(.*?)[,|\\.]? (b\\. in \\w.*)' ) ) #15
 
 # short; as in no detail portion
 name_matchers_short = []
@@ -136,9 +140,16 @@ name_limit = 110
 # 13
 # ix. NAME12 b. Abt 1927.
 # X. NAME13, b. Abt 1933 in
-# worse yet, in somecases the numbers are after the text
-# xvi. NAME...
-# 13
+# Worse yet, in some cases the numbers are after the text
+# 9
+# viii. NAME
+# ix. NAME
+# X. NAME
+# 10
+# xi. NAME
+# 11
+# 12
+
 # Oh, this is a mess. Detect the problem and fail with message.
 
 #bare_parent_number = re.compile( '^(\\d+)\\.$' )
