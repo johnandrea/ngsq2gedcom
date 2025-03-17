@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.7.4
+v0.7.6
 """
 
 import sys
@@ -64,6 +64,7 @@ ross_numbered = re.compile( '([^#]+) #(\\d+)[,|\\.]?(.*)' )
 # 10/ name. Single....
 # 11/ name. town in year...
 # 12/ name. town when father died...
+# 13/ name, b|d. mon year
 # x/ name. town-name...
 
 name_matchers = []
@@ -81,6 +82,7 @@ name_matchers.append( re.compile( '^(.*?)\\. (S?[H|h]e married.*)' ) ) #9
 name_matchers.append( re.compile( '^(.*?)\\. (Single\\..*)' ) ) #10
 name_matchers.append( re.compile( '^(.*?)\\. ([A-Za-z, ]+? in \\d\\d\\d\\d.*)' ) ) #11
 name_matchers.append( re.compile( '^(.*?)\\. ([A-Za-z, ]+? when father died)' ) ) #12
+name_matchers.append( re.compile( '^(.*?)[,|\\.]? ([b|d]\\. [A-Za-z][A-Za-z][A-Za-z] \\d+)' ) ) #13
 
 # short; as in no detail portion
 name_matchers_short = []
@@ -201,14 +203,21 @@ def extract_name( given ):
     name = ''
     after = ''
 
-    for name_match in name_matchers:
-        m = name_match.match( given )
-        if m:
-           name = m.group(1)
-           after = m.group(2)
-           break
+    extractable = given
+
+    found_match = True
+    # keep looping in case more conditions match
+    while found_match:
+        found_match = False
+        for name_match in name_matchers:
+            m = name_match.match( extractable )
+            if m:
+               found_match = True
+               name = m.group(1)
+               after = m.group(2) + ' ' + after
+               extractable = m.group(1)
+               break
     if not name:
-       # consider running this loop a second time to pick through multiple phrases
        for name_match in name_matchers_short:
            m = name_match.match( given )
            if m:
@@ -219,7 +228,8 @@ def extract_name( given ):
        after = given
 
     print( 'got name/', name, file=sys.stderr ) #debug
-    return [ name, after ]
+    #print( 'after   /', after, file=sys.stderr ) #debug
+    return [ name.strip(), after.strip() ]
 
 
 def start_child( p, remainder_of_line ):
@@ -462,7 +472,7 @@ with open( in_full_file, encoding="utf-8" ) as inf:
                continue
          else:
             # check for ocr mistake at the end of any line in a parent
-            if content.endswith( ' Children:' ):
+            if content.endswith( ' Children:' ) or content.startswith( 'Children with ' ) or content.startswith( 'Children by ' ):
                in_children = True
 
          for check_broken in broken_lines:
