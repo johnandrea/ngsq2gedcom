@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.7.10
+v0.7.11
 """
 
 import sys
@@ -136,6 +136,9 @@ name_limit = 110
 # 13
 # ix. NAME12 b. Abt 1927.
 # X. NAME13, b. Abt 1933 in
+# worse yet, in somecases the numbers are after the text
+# xvi. NAME...
+# 13
 # Oh, this is a mess. Detect the problem and fail with message.
 
 #bare_parent_number = re.compile( '^(\\d+)\\.$' )
@@ -425,12 +428,12 @@ with open( in_full_file, encoding="utf-8" ) as inf:
          if content.startswith( 'Generation ' ):
             continue
 
+         if 'children' in content.lower(): #debug
+            print( 'line', n, content, file=sys.stderr ) #debug
+
          if content == 'Children:':
             in_children = True
             continue
-
-         if 'children' in content.lower(): #debug
-            print( 'line', n, content, file=sys.stderr ) #debug
 
          m = person_marker.match( content )
          if m:
