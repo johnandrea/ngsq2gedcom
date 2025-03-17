@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.7.15
+v0.7.16
 """
 
 import sys
@@ -218,8 +218,8 @@ def unquote_row( row_data ):
 
 
 def extract_name( given ):
-    print( '', file=sys.stderr ) #debug
-    print( 'try name/', given, file=sys.stderr ) #debug
+    #print( '', file=sys.stderr ) #debug
+    #print( 'try name/', given, file=sys.stderr ) #debug
 
     name = ''
     after = ''
@@ -248,7 +248,7 @@ def extract_name( given ):
        name = given
        after = given
 
-    print( 'got name/', name, file=sys.stderr ) #debug
+    #print( 'got name/', name, file=sys.stderr ) #debug
     #print( 'after   /', after, file=sys.stderr ) #debug
     return [ name, after ]
 
@@ -439,8 +439,8 @@ with open( in_full_file, encoding="utf-8" ) as inf:
          if content.startswith( 'Generation ' ):
             continue
 
-         if 'children' in content.lower(): #debug
-            print( 'line', n, content, file=sys.stderr ) #debug
+         #if 'children' in content.lower(): #debug
+         #   print( 'line', n, content, file=sys.stderr ) #debug
 
          if content == 'Children:':
             in_children = True
