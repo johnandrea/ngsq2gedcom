@@ -7,7 +7,7 @@ Copyright (c) 2025 John A. Andrea
 
 No support provided.
 
-v0.8.0
+v0.9.1
 """
 
 import sys
@@ -27,6 +27,7 @@ import csv
 #- a person without a sex will be listed as HUSB in a family record
 #- INDI XREF values are taken from person numbers in the input
 #- no consideration for multiple marriages or children thereof
+#- if the second parameter is "RM", then RootsMagic v9 style parsinf is done
 
 # This particular version parses a document whic has "#numbers" following
 # the name (most of them) which becomes a REFN tag.
@@ -149,7 +150,6 @@ name_limit = 110
 # xi. NAME
 # 12
 # 11
-
 # Oh, this is a mess. Detect the problem and fail with message.
 
 #bare_parent_number = re.compile( '^(\\d+)\\.$' )
@@ -159,11 +159,21 @@ broken_lines.append([ 'bare child number', re.compile( '^(\\d+)$') ])
 broken_lines.append([ 'bare child plus and number', re.compile( '^(\\+ ?\\d+)$' ) ])
 broken_lines.append([ 'bare child roman and name', re.compile( '^([i|I|v|V|x|X]+\\. ?...*)$' ) ])
 
+# style of lines
+# style is whatever this is I've been given
+style = 'default'
+style_rm = 'RootsMagic'
+# potential other style is RM for me to do some testing
+
+# strings that can help distinguish sex if found in a person's notes
+female_sex_words = [' She died ',' She was christened']
+male_sex_words = [' He died ',' He was christened']
+
 # common names to help determine sex
 # note, all lowercase
-females = ['adele', 'alice', 'amelia', 'andrea', 'ann', 'annie', 'antoinette',
-           'aurora', 'barbara', 'bernice', 'carol', 'catherine', 'cecilia',
-           'cynthia', 'daphne', 'denise', 'donna', 'elizabeth', 'emily', 'esme',
+females = ['adele', 'alice', 'amelia', 'andrea', 'ann', 'annie', 'antoinette', 'anne',
+           'aurora', 'barbara', 'bernice', 'carol', 'catherine', 'cecilia', 'camilla', 'beartice',
+           'cynthia', 'daphne', 'denise', 'donna', 'elizabeth', 'emily', 'esme', 'dianna',
            'esther', 'eugenia', 'eva', 'evelyn', 'farrah', 'gail', 'geneva',
            'genevieve', 'genie', 'hazel', 'helen', 'hindth', 'irene', 'isabelle',
            'jamalie', 'jane', 'janet', 'jean', 'joan', 'josephine', 'joyce', 'julia',
@@ -171,21 +181,21 @@ females = ['adele', 'alice', 'amelia', 'andrea', 'ann', 'annie', 'antoinette',
            'linda', 'loretta', 'lorraine', 'louise', 'lulu', 'lynn', 'madeline',
            'mamie', 'margaret', 'marguerite', 'maria', 'mariam', 'marie', 'marina',
            'marion', 'martha', 'mary', 'matilda', 'mercedes', 'meriana', 'minera',
-           'morena', 'nancy', 'odette', 'patricia', 'paula', 'paulette', 'rebecca',
-           'regina', 'rita', 'roberta', 'rochelle', 'rosa', 'rose', 'sadie', 'sandra',
-           'sarah', 'sarrauff', 'serena', 'sevilla', 'shaheedy', 'shela', 'shirley',
+           'morena', 'nancy', 'odette', 'patricia', 'paula', 'paulette', 'rebecca', 'rachel',
+           'regina', 'rita', 'roberta', 'rochelle', 'rosa', 'rose', 'sadie', 'sandra', 'rosemary',
+           'sarah', 'sarrauff', 'serena', 'sevilla', 'shaheedy', 'shela', 'shirley', 'sophie',
            'sister', 'suraya', 'susan', 'suzette', 'sylvia', 'theresa', 'thresa',
-           'veronica', 'victoria', 'virginia', 'yamile', 'yvonne']
+           'veronica', 'victoria', 'virginia', 'yamile', 'yvonne', 'zara']
 males = ['abdullah', 'abraham', 'adrian', 'albert', 'allan', 'alsyus', 'anthony',
-         'antonio', 'badaoui', 'boutrous', 'brent', 'brian', 'cameron', 'charles',
+         'antonio', 'badaoui', 'boutrous', 'brent', 'brian', 'cameron', 'charles', 'archie',
          'chester', 'christopher', 'daniel', 'dave', 'david', 'derek', 'edward',
-         'elias', 'eugene', 'felix', 'francis', 'frank', 'fred', 'frederick',
-         'gabriel', 'garth', 'gary', 'george', 'gerald', 'gordon', 'haid', 'harold',
-         'james', 'jerges', 'jerry', 'john', 'jorge', 'joseph', 'kevin', 'khalil',
-         'louis', 'male', 'marshall', 'maurice', 'michael', 'nahman', 'paul', 'peter',
-         'philip', 'pierre', 'rafoul', 'randolph', 'raymond', 'rev.', 'richard',
+         'elias', 'eugene', 'felix', 'francis', 'frank', 'fred', 'frederick', 'eric', 'erik',
+         'gabriel', 'garth', 'gary', 'george', 'gerald', 'gordon', 'haid', 'harold', 'henry',
+         'james', 'jerges', 'jerry', 'john', 'jorge', 'joseph', 'kevin', 'khalil', 'jack',
+         'louis', 'male', 'marshall', 'maurice', 'michael', 'nahman', 'paul', 'peter', 'lucas',
+         'philip', 'pierre', 'rafoul', 'randolph', 'raymond', 'rev.', 'richard', 'mike',
          'rob', 'robert', 'roger', 'ronald', 'ronnie', 'roy', 'salim', 'salomon',
-         'simon', 'stephan', 'tannous', 'thomas', 'tony', 'vincent', 'wadih',
+         'simon', 'stephan', 'tannous', 'thomas', 'tony', 'vincent', 'wadih', 'timothy',
          'william', 'youssef']
 
 
@@ -364,6 +374,16 @@ def process_people():
               sex = 'M'
            elif first_name in females:
               sex = 'F'
+        if not sex:
+           for sex_words in male_sex_words:
+               if sex_words in people[p]['notes']:
+                  sex = 'M'
+                  break
+        if not sex:
+           for sex_words in female_sex_words:
+               if sex_words in people[p]['notes']:
+                  sex = 'F'
+                  break
         people[p]['sex'] = sex
 
         people[p]['in-fams'] = in_fams
@@ -393,6 +413,10 @@ in_full_file = sys.argv[1] + os.path.sep + in_filename
 if not os.path.isfile( in_full_file ):
    print( 'ERROR: input file not found:', in_full_file, file=sys.stderr )
    sys.exit()
+
+if len(sys.argv) > 2:
+   if sys.argv[2].lower == 'rm':
+      style = style_rm
 
 with open( in_full_file, encoding="utf-8" ) as inf:
      csvreader = csv.reader( inf )
